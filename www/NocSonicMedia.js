@@ -23,10 +23,214 @@ var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
 
-var mediaObjects = {};
+var nocMixObject = { };
+/**
+ * _sonicSrc:  Url or File used to create looping beat if user has decided to have one
+ * _sonicBuffer:byteArray; (Beat track)3
+ * _sonicGain: number; floating point current level of Volume  (0-1);
+ *
+ *
+ *
+ *  _nocTitle:  Name the user has given to this creation
+ * _nocBuffer:byteArray;   (Vocal track)
+ * _nocGain: Number; floating point mixerLevel of Volume duriong  Playback PlayBack  (0-1);
+ *
+ *
+ * */
+
+
 
 /**
- * This class provides access to the device media, interfaces to both sound and video
+ *     NOTES: If user has called this function the file supplied by the src, should be download into
+ *     and audio buffer, from where it will be played in a loop, the duration of the audio should be
+ *     no longer than 30 seconds.
+ *
+ *      @param src                  most often will represent a url path to a file previousl downloaded,
+ *                                  thus residing with in the system app directory,  but should be able
+ *                                  to work with remote (external url as well)
+ *
+ *      @param errorCallback        The callback to be called if there is an error.
+ *                                  errorCallback(int errorCode)
+ *
+ *      @param statusCallback       The callback to be called when media status has changed.
+ *                                  statusCallback(int statusCode)
+ *
+ *      loadSonic(url, successCallback, errorCallback,statusCallback)
+ *
+ */
+
+
+
+
+/**
+ *     NOTES: This function should begin playing the beat in a loop from the audio buffer that it has been
+ *     loaded into. If the Buffer has not been loaded it should return and ErrorCode (), the Gain (Volume
+ *     level should begin at .75
+ *
+ *      playSonicLoop();
+ */
+
+
+
+/**
+ *     NOTES: Pause play back of Sonic Loop, if  Recording (audio capturing) in progess do not stop,
+ *            the Recording, simply set Gain Amount to mute
+ *
+ *      pauseSonicLoop();
+ */
+
+
+/**
+ *     NOTES: Stop play back of Sonic Loop
+ *
+ *     stopSonicLoop();
+ *
+ * */
+
+
+ /**
+ *     NOTES: the Gain (Volume) level should begin at .75
+ *
+ *      @param sonicLoopGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ *      updateSonicLoopVolume(sonicLoopGain);
+ */
+
+
+/**
+ *       NOTES:Level of Volume
+ *       event return volume levels
+ *       broadcastLevelOfSonicMeter()
+ *
+ */
+
+
+
+/**
+ *      NOTES: Audio Capture from device input (with or without microphone).
+ *
+ *      a) If current looping beat exist (even if it has been paused) begins to write into Audio Beat Buffer
+ *         from its current position ( thus, the beat should not be forced to start at the zero position);
+ *
+ *      b) Captured audio from microphone or other input should be directly  write into Audio Vocal track Buffer,
+ *           separate from beat track
+ *
+ *      c) If stopTime has not been set, the recording stop after 31 seconds, the Maximum amount of recording time
+ *        is 45 seconds.
+ *           - BEAT stops playing and stop writing to audio beat buffer
+ *           - MIC or input Device Is closed(prevented from capturing) and stop writing to vocal buffer
+ *
+ *
+ *      d) If STUDIO_STATE == recording and STUDIO_BEAT_END_ATTACHED == true
+ *         then perform c) actions
+ *
+ *      @param stopTime:number;
+ *
+ *      nocStartRecording(stopTime );
+ */
+
+
+ /**
+ *     NOTES: the Gain (Volume) level should begin at .75, the volume of input coming in
+ *
+ *      @param  inputGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ *      updateInputVolume(inputGain);
+ */
+
+
+
+/**
+ *       NOTES:Level of Audio being Caputre from Input
+ *
+ *
+ *       event return volume levels
+ *       broadcastLevelOfAudioRecordingMeter()
+ *
+ *
+ */
+
+
+/**
+ *     NOTES: Simultaneously play audio back from Audio Beat Buffer and And Audio Vocal Buffer
+ *
+ *      playTwoTracks();
+ */
+
+
+
+/**
+ *     NOTES: Simultaneously pause audio from Audio Beat Buffer and And Audio Vocal Buffer
+ *
+ *      pauseTwoTracks();
+ */
+
+
+
+/**
+ *     NOTES: Simultaneously stop audio play from Audio Beat Buffer and And Audio Vocal Buffer
+ *            and start playing each buffer from beginning
+ *
+ *      rewindTwoTracks();
+ */
+
+
+ /**
+ *     NOTES: the Gain (Volume) level should begin at .75
+ *
+ *      @param beatGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ *      updateBeatTrackVolume(beatGain);
+ */
+
+
+/**
+ *       NOTES:Level of Volume
+ *       event return volume levels
+ *       broadcastBeatTrackMeter()
+ *
+ */
+
+
+ /**
+ *     NOTES: the Gain (Volume) level should begin at .75
+ *
+ *      @param vocalGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ *      updateVocalTrackVolume(beatGain);
+ */
+
+
+/**
+ *       NOTES:Level of Volume
+ *       event return volume levels
+ *       broadcastVocalTrackMeter()
+ *
+ */
+
+
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer
+ *
+ *
+ *
+ *       createMasterMix();
+ *
+ */
+
+/**
+ *       NOTES: Create a .m4a file based on the name of the user has supplied
+ *              with    name_(id).mp4
+ *              a) After File is created destroy all buffers
+ *
+ *       promoteMasterMix();
+ *
+ */
+
+
+/**
+ * This class provides access to the device  audio interfaces for creating a two track mixer
  *
  * @constructor
  * @param src                   The file name or url to play
@@ -36,11 +240,17 @@ var mediaObjects = {};
  *                                  errorCallback(int errorCode) - OPTIONAL
  * @param statusCallback        The callback to be called when media status has changed.
  *                                  statusCallback(int statusCode) - OPTIONAL
+ *
+ *
+ *
+ *
+ *
+ *
  */
 var NocSonicMedia = function(src, successCallback, errorCallback, statusCallback) {
     argscheck.checkArgs('sFFF', 'NocSonicMedia', arguments);
     this.id = utils.createUUID();
-    mediaObjects[this.id] = this;
+    nocMixObject[this.id] = this;
     this.src = src;
     this.successCallback = successCallback;
     this.errorCallback = errorCallback;
@@ -64,9 +274,22 @@ NocSonicMedia.MEDIA_PAUSED = 3;
 NocSonicMedia.MEDIA_STOPPED = 4;
 NocSonicMedia.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
 
+
+
+
+
+//
+
+
+
+
+
+
+
+
 // "static" function to return existing objs.
 NocSonicMedia.get = function(id) {
-    return mediaObjects[id];
+    return nocMixObject[id];
 };
 
 /**
@@ -162,7 +385,7 @@ NocSonicMedia.prototype.setVolume = function(volume) {
  */
 NocSonicMedia.onStatus = function(id, msgType, value) {
 
-    var media = mediaObjects[id];
+    var media = nocMixObject[id];
 
     if(media) {
         switch(msgType) {
