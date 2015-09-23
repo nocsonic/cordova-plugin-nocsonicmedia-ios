@@ -61,6 +61,13 @@ var nocMixObject = { };
 
 
 
+/**
+ *       NOTES: Return State of Mix
+ *
+ *       getStateOfMixer();
+ */
+
+
 
 /**
  *     NOTES: This function should begin playing the beat in a loop from the audio buffer that it has been
@@ -88,6 +95,8 @@ var nocMixObject = { };
  * */
 
 
+
+
  /**
  *     NOTES: the Gain (Volume) level should begin at .75
  *
@@ -97,9 +106,11 @@ var nocMixObject = { };
  */
 
 
+
 /**
  *       NOTES:Level of Volume
  *       event return volume levels
+ *
  *       broadcastLevelOfSonicMeter()
  *
  */
@@ -145,6 +156,7 @@ var nocMixObject = { };
  *
  *
  *       event return volume levels
+ *
  *       broadcastLevelOfAudioRecordingMeter()
  *
  *
@@ -187,13 +199,14 @@ var nocMixObject = { };
 /**
  *       NOTES:Level of Volume
  *       event return volume levels
+ *
  *       broadcastBeatTrackMeter()
  *
  */
 
 
  /**
- *     NOTES: the Gain (Volume) level should begin at .75
+ *       NOTES: the Gain (Volume) level should begin at .75
  *
  *      @param vocalGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
@@ -204,20 +217,73 @@ var nocMixObject = { };
 /**
  *       NOTES:Level of Volume
  *       event return volume levels
+ *
  *       broadcastVocalTrackMeter()
+ *
+ */
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *
+ *       deleteTwoTracks()
+ *
+ */
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *
+ *       createMasterMix();
+ *
+ */
+
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *
+ *       playMasterMix();
+ *
+ */
+
+
+
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *
+ *       stopMasterMix();
  *
  */
 
 
 
 /**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
  *
- *
- *
- *       createMasterMix();
+ *       rewindMasterMix();
  *
  */
+
+
+
+ /**
+ *       NOTES: the Gain (Volume) level should begin at .75
+ *
+ *      @param masterMixGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ *      updateMasterMixVolume(masterMixGain);
+ */
+
+
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *
+ *       deleteMasterMix()
+ *
+ */
+
+
+
 
 /**
  *       NOTES: Create a .m4a file based on the name of the user has supplied
@@ -227,6 +293,8 @@ var nocMixObject = { };
  *       promoteMasterMix();
  *
  */
+
+
 
 
 /**
