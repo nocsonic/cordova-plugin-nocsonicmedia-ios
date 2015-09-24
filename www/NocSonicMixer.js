@@ -23,7 +23,7 @@ var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
 
-var nocMixObject = { };
+var twoTrackObject = { };
 /**
  * _sonicSrc:  Url or File used to create looping beat if user has decided to have one
  * _sonicBuffer:byteArray; (Beat track)3
@@ -38,14 +38,64 @@ var nocMixObject = { };
  *
  * */
 
+var NocSonicMixer = function(successCallback, errorCallback, statusCallback){
+      for(var prop in ad) {
+        if (twoTrackObject.hasOwnProperty(prop)) {
+            //check for listeners before destroying
+
+            delete twoTrackObject[prop];
+        }
+     }
+     this.id = utils.createUUID();
+     twoTrackObject[this.id] = this;
+     this.successCallback    = successCallback;
+     this.errorCallback      = errorCallback;
+     this.statusCallback     = statusCallback;
+     exec(null, this.errorCallback, "NocSonicMixer", "create", [this.id]);
+}
+
+
+// NocSonicMixer messages
+NocSonicMixer.MEDIA_STATE = 1;
+NocSonicMixer.MEDIA_DURATION = 2;
+NocSonicMixer.MEDIA_POSITION = 3;
+NocSonicMixer.MEDIA_ERROR = 9;
+
+// NocSonicMixer states
+NocSonicMixer.MEDIA_NONE = 0;
+NocSonicMixer.MEDIA_STARTING = 1;
+NocSonicMixer.MEDIA_RUNNING = 2;
+NocSonicMixer.MEDIA_PAUSED = 3;
+NocSonicMixer.MEDIA_STOPPED = 4;
+NocSonicMixer.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
+
+
 
 
 /**
- *     NOTES: If user has called this function the file supplied by the src, should be download into
+ *       NOTES: Return State of Mix
+ *
+ *       getStateOfMixer();
+ */
+
+
+
+
+
+
+
+// "static" function to return existing objs.
+NocSonicMixer.get = function(id) {
+    return twoTrackObject[id];
+};
+
+
+/**
+ *     NOTES: If user has called this function the file supplied by the sonicSrc, should be download into
  *     and audio buffer, from where it will be played in a loop, the duration of the audio should be
  *     no longer than 30 seconds.
  *
- *      @param src                  most often will represent a url path to a file previousl downloaded,
+ *      @param sonicSrc                  most often will represent a url path to a file previousl downloaded,
  *                                  thus residing with in the system app directory,  but should be able
  *                                  to work with remote (external url as well)
  *
@@ -60,23 +110,29 @@ var nocMixObject = { };
  */
 
 
-
-/**
- *       NOTES: Return State of Mix
- *
- *       getStateOfMixer();
- */
-
+NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
+    this.sonicSrc = sonicSrc;
+    this._sonicPosition = -1;
+    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadSonicTrack", [this.id, this.sonicSrc]);
+};
 
 
 /**
  *     NOTES: This function should begin playing the beat in a loop from the audio buffer that it has been
  *     loaded into. If the Buffer has not been loaded it should return and ErrorCode (), the Gain (Volume
  *     level should begin at .75
+ *      options is simple Object{
+ *          loop:true  //  by default this true unless explicitly set to FALSE, if not present it is TRUE
+ *          gainAmount: .75  // volume level
+ *          playAudioWhenScreenIsLocked default = true;
+ *      }
  *
  *      playSonicLoop();
  */
 
+NocSonicMixer.prototype.playSonicLoop = function(options) {
+    exec(null, null, "NocSonicMedia", "startPlayingSonicLoop", [this.id, this.sonicSrc, options]);
+};
 
 
 /**
@@ -87,33 +143,167 @@ var nocMixObject = { };
  */
 
 
+NocSonicMixer.prototype.pauseSonicLoop = function() {
+    exec(null, this.errorCallback, "NocSonicMixer", "pausePlayingSonicLoop", [this.id]);
+};
+
+
+
+
 /**
- *     NOTES: Stop play back of Sonic Loop
+ *     NOTES: Stop play back of Sonic Loop occurs, this will either occur before
+ *     user begins a record session and means that the user has choosen to record without a beat Accapella or
+ *     the user has stopped a looping beat because the no longer want to hear it and are possibly deciding on
+ *     another beat.
+ *     a) Stopping a sonic Loop will only occur in "rhythm selection" view
+ *     b) Stopping a sonic Loop will be trigger by selecting acapella
  *
  *     stopSonicLoop();
  *
  * */
 
+NocSonicMedia.prototype.stopSonicLoop = function() {
+    var me = this;
+    exec(function() {
+        me._sonicPosition = 0;
+    }, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id]);
+};
 
 
+
+
+/**
+ * NOTES: Currently this will be used to send user back to beginning of a sonic clip,
+ * and start the Looping over again. The distinction between "stopSonicLoop" and
+ *  "sonicLoopRewind" is that when "sonicLoopRewind" occurs the playback of a loop will not stop
+ *
+ *
+ * Seek or jump to a new time in the track..
+ */
+NocSonicMixer.prototype.sonicLoopRewind = function() {
+    var me = this;
+    exec(function() {
+        me._sonicPosition = 0;
+    }, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
+};
 
  /**
  *     NOTES: the Gain (Volume) level should begin at .75
  *
  *      @param sonicLoopGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *      updateSonicLoopVolume(sonicLoopGain);
+ *      setSonicLoopVolume(sonicLoopGain);
  */
+
+
+NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
+    exec(null, null, "NocSonicMixer", "setSonicLoopVolume", [this.id, sonicLoopGain]);
+};
 
 
 
 /**
- *       NOTES:Level of Volume
- *       event return volume levels
- *
+ *       NOTES:Audio Graph displaying levels of Audio Amplitude..
+ *       turns on event status issuing
  *       broadcastLevelOfSonicMeter()
  *
+ *       https://github.com/YogendraSharma2007/android-spl-meter
+ *       https://github.com/AdFabConnect/ViewMeterCordova
+ *
+ *      https://msdn.microsoft.com/en-us/library/windows/apps/windows.media.audio.aspx
+ *      https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/AudioCreation
+ *      https://msdn.microsoft.com/en-us/library/windows/apps/mt203787.aspx
+ *      https://channel9.msdn.com/coding4fun/articles/NET-Voice-Recorder
+ *      https://github.com/Microsoft/audio-recorder
+ *
+ *      https://github.com/Microsoft/audio-recorder/blob/master/AudioRecorder/MainPage.xaml.cs
+ *      //
+ *
  */
+
+NocSonicMixer.prototype.broadcastSonicLoopMeter = function() {
+
+    exec(null, null, "NocSonicMixer", "broadcastSonicLoopMeter", [this.id, sonicLoopGain]);
+};
+
+
+
+/**
+ * Release the resources.
+ * if Neccessary
+ */
+NocSonicMixer.prototype.sonicLoopRelease = function() {
+    exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRelease", [this.id]);
+};
+
+
+
+
+/**
+ *     Recording Session View
+ *
+ *      NOTES: Audio Capture from device input (with or without microphone) and, if it exist, the current looping
+ *             sonic.
+ *
+ *      a)  Simultaneoulsy, (using native Audio Api syquencer, audio manager, etc) begin capturing audio from microphone
+ *            (may be external headset with microphone, or just the native device microphone) and write into Vocal Track Buffer
+ *             and
+ *             If current looping beat exist (even if it has been paused) begin to write into a sonic Beat Buffer
+ *             from its current position ( thus, the beat should not be forced to start at the zero position, looping beat will
+ *             not exist if audioLoop has been stopped... this means that a user has choosen Acapella );
+ *
+ *             - two Distinct Buffers Created    Vocal Track Buffer  and Sonic Track Buffer
+ *             - begin writing to both Buffers  at the same time...even if the sonicLoop is PAUSED or
+ *               even if the user is silent (has not began Vocalizing)
+ *             - Sample data that is being written to each buffer should be done with 16 bit PCM
+ *
+ *      c) If stopTime has NOT been set, the recording stop auotmatically after 31 seconds, the Maximum amount of recording time
+ *            is 45 seconds and should only be set to that amount of time by the   @param stopTime
+ *           - BEAT stops playing and stops writing to Sonic Track Buffer
+ *           - MIC or input Device Is closed(prevented from capturing) and stop writing to Vocal Track Buffer
+ *           
+ *          
+ *
+ *      d) Hopefully the state of the sonicLoop can be deduced from the native code implementation, however, if you 
+ *         find that it neccessary to pass the state, it can be added to the function call by getting state locally 
+ *      
+ *      
+ *      e) During a recording Session if the user play back is interrupted by a phone call.. 
+ *      
+ *          -- looping sonic audio should stop... if Sonic Audio that is being looped is using separate buffer ( NOT the
+ *             Sonic Track Buffer) than there is no need to delete this buffer.
+ *          -- any buffers created specfically for capturing should be deleted and memory released
+ *
+ *      
+ *      
+ *      @param stopTime:number;
+ *
+ *      startNocRecordingSession(stopTime );
+ */
+
+
+NocSonicMedia.prototype.startNocRecordingSession = function(stopTime) {
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -139,6 +329,22 @@ var nocMixObject = { };
  *
  *      nocStartRecording(stopTime );
  */
+
+
+/**
+ * Start recording audio file.
+ *  Current State can be
+ *
+ *
+ */
+NocSonicMedia.prototype.startRecord = function() {
+    exec(null, this.errorCallback, "NocSonicMedia", "startRecordingAudio", [this.id, this.sonicSrc]);
+};
+
+
+
+
+
 
 
  /**
@@ -301,7 +507,7 @@ var nocMixObject = { };
  * This class provides access to the device  audio interfaces for creating a two track mixer
  *
  * @constructor
- * @param src                   The file name or url to play
+ * @param sonicSrc                   The file name or url to play
  * @param successCallback       The callback to be called when the file is done playing or recording.
  *                                  successCallback()
  * @param errorCallback         The callback to be called if there is an error.
@@ -315,84 +521,9 @@ var nocMixObject = { };
  *
  *
  */
-var NocSonicMedia = function(src, successCallback, errorCallback, statusCallback) {
-    argscheck.checkArgs('sFFF', 'NocSonicMedia', arguments);
-    this.id = utils.createUUID();
-    nocMixObject[this.id] = this;
-    this.src = src;
-    this.successCallback = successCallback;
-    this.errorCallback = errorCallback;
-    this.statusCallback = statusCallback;
-    this._duration = -1;
-    this._position = -1;
-    exec(null, this.errorCallback, "NocSonicMedia", "create", [this.id, this.src]);
-};
-
-// NocSonicMedia messages
-NocSonicMedia.MEDIA_STATE = 1;
-NocSonicMedia.MEDIA_DURATION = 2;
-NocSonicMedia.MEDIA_POSITION = 3;
-NocSonicMedia.MEDIA_ERROR = 9;
-
-// NocSonicMedia states
-NocSonicMedia.MEDIA_NONE = 0;
-NocSonicMedia.MEDIA_STARTING = 1;
-NocSonicMedia.MEDIA_RUNNING = 2;
-NocSonicMedia.MEDIA_PAUSED = 3;
-NocSonicMedia.MEDIA_STOPPED = 4;
-NocSonicMedia.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
-
-
-
-
 
 //
 
-
-
-
-
-
-
-
-// "static" function to return existing objs.
-NocSonicMedia.get = function(id) {
-    return nocMixObject[id];
-};
-
-/**
- * Start or resume playing audio file.
- */
-NocSonicMedia.prototype.play = function(options) {
-    exec(null, null, "NocSonicMedia", "startPlayingAudio", [this.id, this.src, options]);
-};
-
-/**
- * Stop playing audio file.
- */
-NocSonicMedia.prototype.stop = function() {
-    var me = this;
-    exec(function() {
-        me._position = 0;
-    }, this.errorCallback, "NocSonicMedia", "stopPlayingAudio", [this.id]);
-};
-
-/**
- * Seek or jump to a new time in the track..
- */
-NocSonicMedia.prototype.seekTo = function(milliseconds) {
-    var me = this;
-    exec(function(p) {
-        me._position = p;
-    }, this.errorCallback, "NocSonicMedia", "seekToAudio", [this.id, milliseconds]);
-};
-
-/**
- * Pause playing audio file.
- */
-NocSonicMedia.prototype.pause = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "pausePlayingAudio", [this.id]);
-};
 
 /**
  * Get duration of an audio file.
@@ -419,7 +550,7 @@ NocSonicMedia.prototype.getCurrentPosition = function(success, fail) {
  * Start recording audio file.
  */
 NocSonicMedia.prototype.startRecord = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "startRecordingAudio", [this.id, this.src]);
+    exec(null, this.errorCallback, "NocSonicMedia", "startRecordingAudio", [this.id, this.sonicSrc]);
 };
 
 /**
