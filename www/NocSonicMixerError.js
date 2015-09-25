@@ -18,7 +18,7 @@ we should simply use a literal :
 
 
 if(!_MediaError) {
-    window.NocSonicMediaError = _MediaError = function(code, msg) {
+    window.NocSonicMixer = _MediaError = function(code, msg) {
         this.code = (typeof code != 'undefined') ? code : null;
         this.message = msg || ""; // message is NON-standard! do not use!
     };

@@ -23,7 +23,7 @@ var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
 
-var twoTrackObject = { };
+var nocMixObject = { };
 /**
  * _sonicSrc:  Url or File used to create looping beat if user has decided to have one
  * _sonicBuffer:byteArray; (Beat track)3
@@ -40,14 +40,14 @@ var twoTrackObject = { };
 
 var NocSonicMixer = function(successCallback, errorCallback, statusCallback){
       for(var prop in ad) {
-        if (twoTrackObject.hasOwnProperty(prop)) {
+        if (nocMixObject.hasOwnProperty(prop)) {
             //check for listeners before destroying
 
-            delete twoTrackObject[prop];
+            delete nocMixObject[prop];
         }
      }
      this.id = utils.createUUID();
-     twoTrackObject[this.id] = this;
+     nocMixObject[this.id] = this;
      this.successCallback    = successCallback;
      this.errorCallback      = errorCallback;
      this.statusCallback     = statusCallback;
@@ -56,18 +56,78 @@ var NocSonicMixer = function(successCallback, errorCallback, statusCallback){
 
 
 // NocSonicMixer messages
-NocSonicMixer.MEDIA_STATE = 1;
-NocSonicMixer.MEDIA_DURATION = 2;
-NocSonicMixer.MEDIA_POSITION = 3;
-NocSonicMixer.MEDIA_ERROR = 9;
+NocSonicMixer.NSMIXER_STATE = 1;
+//NocSonicMixer.MEDIA_DURATION = 2;
+//NocSonicMixer.NSMIXER_SONICLOOP_POSITION = 3;
+//NocSonicMixer.NSMIXER_VOCALTRACK_POSITION = 4;
+//NocSonicMixer.NSMIXER_SONICTRACK_POSITION = 5;
+//NocSonicMixer.NSMIXER_MASTERMIX_POSITION = 5;
+//NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION = 6;
+NocSonicMixer.NSMIXER_SONICLOOP_VU_METER= 7;
+NocSonicMixer.NSMIXER_VOCALTRACK_VU_METER = 8;
+NocSonicMixer.NSMIXER_SONICTRACK_VU_METER = 9;
+NocSonicMixer.NSMIXER_MASTERMIX_VU_METER = 10;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_VU_METER = 11;
+
+NocSonicMixer.NSMIXER_ERROR = 99;
 
 // NocSonicMixer states
-NocSonicMixer.MEDIA_NONE = 0;
-NocSonicMixer.MEDIA_STARTING = 1;
-NocSonicMixer.MEDIA_RUNNING = 2;
-NocSonicMixer.MEDIA_PAUSED = 3;
-NocSonicMixer.MEDIA_STOPPED = 4;
-NocSonicMixer.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
+NocSonicMixer.NSMIXER_NONE = 0;
+NocSonicMixer.NSMIXER_SONICLOOP_LOADED = 1;
+NocSonicMixer.NSMIXER_SONICLOOP_PLAYING = 2;
+NocSonicMixer.NSMIXER_SONICLOOP_PAUSED = 3;
+NocSonicMixer.NSMIXER_SONICLOOP_STOPPED = 4;
+
+NocSonicMixer.NSMIXER_RECORDSESSION_READY = 5;
+NocSonicMixer.NSMIXER_RECORDSESSION_STARTED = 6;
+NocSonicMixer.NSMIXER_RECORDSESSION_IN_PROGESS = 7;
+NocSonicMixer.NSMIXER_RECORDSESSION_STOPPED = 8;
+
+NocSonicMixer.NSMIXER_MIXINGSESSION_READY = 9;
+NocSonicMixer.NSMIXER_MIXINGSESSION_PLAYING = 10;
+NocSonicMixer.NSMIXER_MIXINGSESSION_PAUSED  = 11;
+NocSonicMixer.NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS = 12;
+NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED = 13;
+
+
+NocSonicMixer.NSMIXER_MASTERMIX_MERGING = 14;
+NocSonicMixer.NSMIXER_MASTERMIX_MERGED  = 15;
+NocSonicMixer.NSMIXER_MASTERMIX_PLAYING = 16;
+NocSonicMixer.NSMIXER_MASTERMIX_PAUSED  = 17;
+NocSonicMixer.NSMIXER_MASTERMIX_STOPPED = 18;
+
+
+
+NocSonicMixer.NSMIXER_PROMOTEDFILE_CREATED = 19;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING = 20;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED  = 21;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED = 22;
+
+
+NocSonicMixer.MEDIA_MSG = ["None",
+                           "SonicLoopLoaded",
+                           "SonicLoopPlaying",
+                           "SonicLoopLoadedPaused",
+                           "SonicLoopLoadedStopped",
+                           "RecordingSessionReady",
+                           "RecordingSessionStarted",
+                           "RecordingSessionInProgress",
+                           "RecordingSessionStopped",
+                           "MixingSessionReady",
+                           "MixingSessionPlaying",
+                           "MixingSessionPaused",
+                           "MixingSessionEditInProgress",
+                           "MixingSessionStopped",
+                           "MasterMixMerging",
+                           "MasterMixMerged",
+                           "MasterMixPlaying",
+                           "MasterMixPaused",
+                           "MasterMixStopped",
+                           "PromotedFileCreated",
+                           "PromotedFilePlaying",
+                           "PromotedFilePaused",
+                           "PromotedFileStopped"
+                           ];
 
 
 
@@ -86,8 +146,22 @@ NocSonicMixer.MEDIA_MSG = ["None", "Starting", "Running", "Paused", "Stopped"];
 
 // "static" function to return existing objs.
 NocSonicMixer.get = function(id) {
-    return twoTrackObject[id];
+    return nocMixObject[id];
 };
+
+
+
+
+
+
+/**
+ *     Rhythym Selection  Session
+ *
+ *
+ * */
+
+
+
 
 
 /**
@@ -375,6 +449,14 @@ NocSonicMixer.prototype.broadcastInputDeviceAmplitude = function() {
 
 
 
+
+/**
+ *     Two Track Mixing Session
+ *
+ *
+ * */
+
+
 /**
  *     NOTES: Simultaneously play audio back from Audio Beat Buffer and And Audio Vocal Buffer
  *
@@ -396,7 +478,6 @@ NocSonicMixer.prototype.playTwoTracks = function() {
  *
  *       -- simultaneously pause both Vocal Track Buffer and  Sonic Track Buffer  from playing
  *
- *      pauseTwoTracks();
  */
 
 NocSonicMixer.prototype.pauseTwoTracks = function() {
@@ -406,11 +487,14 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
 
 
  /**
- *     NOTES: the Gain (Volume) level should begin at .75
+ *     NOTES: Adjustments to the volume of the Sonic Buffer Track present in the final
+ *     master and proceeding  .m4a file creation.
+ *
+ *       -- A test of this capability would be to call pauseTwoTracks(), change level of volume and then
+  *         call playTwoTracks() the volume change  should be evident.
  *
  *      @param sonicBufferGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *     setSonicBufferTrackVolume(sonicBufferGain);
  */
 
 NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
@@ -431,11 +515,11 @@ NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
 
 
  /**
- *     NOTES: the Gain (Volume) level should begin at .75
+ *     NOTES: Adjustments to the volume of the Vocal Buffer Track present in the final
+ *     master and proceeding  .m4a file creation.
  *
- *      @param vocalBufferGain: Number; (0-1)  0 being mute, 1 being the loudest
- *
- *     setVocalBufferTrackVolume(vocalBufferGain);
+ *       -- A test of this capability would be to call pauseTwoTracks(), change level of volume and then
+  *         call playTwoTracks() the volume change  should be evident.
  */
 
 NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
@@ -453,8 +537,10 @@ NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
  */
 
 
+
 /**
- *       NOTES:Level of Audio being Capture from Input
+ *       NOTES:  deleteSonicTrackBuffer()  will be called when user has decided masterMix is acceptable
+ *                -- All memory allocated for buffer should be deleted and resources released
  *
  *
  */
@@ -466,7 +552,8 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
 
 
 /**
- *       NOTES:Level of Audio being Capture from Input
+ *       NOTES:  deleteVocalTrackBuffer()  will be called when user has decided masterMix is acceptable
+ *                -- All memory allocated for buffer should be deleted and resources released
  *
  *
  */
@@ -477,8 +564,21 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
 
 
 
+
+
+
+
 /**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *     Master Creation Session
+ *
+ *
+ * */
+
+/**
+ *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  Sonic Buffer or VOCAL Buffer as user
+ *       may decided they are not satisfied with what was created after listening to masterMix.
+ *          --Changes made to the Volume of each Sonic Track Buffer and Vocal Track Bufffer should be present
+ *            after the buffers have been merged to a single buffer
  *
  *       createMasterMix();
  *
@@ -490,7 +590,7 @@ NocSonicMixer.prototype.createMasterMix = function() {
 
 
 /**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *       NOTES: Playing back (reading samples from master mix buffer)
  *
  *
  *       -- set master mix back to 0
@@ -522,41 +622,143 @@ NocSonicMixer.prototype.stopMasterMix = function() {
 
  /**
  *       NOTES: the Gain (Volume) level should begin at .75
+ *       --changes to volume do not effect final promoted mix, should simply simulate
+  *        what playback will sound like from file creation
  *
- *
- *      @param mixerGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *      @param masterMixGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
  */
 
-NocSonicMixer.prototype.setMasterMixVolume = function(mixerGain) {
+NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
-    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, mixerGain]);
+    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
 };
 
 
 
-
-
 /**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
- *
- *       deleteMasterMix()
+ *       NOTES:  deleteMasterMix()  will be called when user when user has accepted final promotedMasterMix()
+ *                -- User will have options to listen to final .m4a file before deleteMasterMix() is called
+ *                -- All memory allocated for buffer should be deleted and resources released
  *
  */
 
 
+NocSonicMixer.prototype.deleteMasterMix = function() {
+
+    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id]);
+};
+
+
+
+/**
+ *     Master Promotion Session
+ *
+ *
+ * */
 
 
 /**
  *       NOTES: Create a .m4a file based on the name of the user has supplied
  *              with    name_(id).mp4
- *              a) After File is created destroy all buffers
- *
- *       promoteMasterMix();
- *
+ *          @param fileName:Stirng //ex. madness_12323423  which should result in madness_12323423.m4a
  */
 
 
+NocSonicMixer.prototype.promoteMasterToFile = function(fileName) {
+
+    exec(null, null, "NocSonicMixer", "promoteMasterMix", [this.id], fileName);
+};
+
+
+ /**
+ *       NOTES: play/resume back of master file as it will be heard by others, should
+  *       be the same as what was heard when masterMixPlay() occurred
+  *
+  *       -- if paused, resume playback from paused position
+ *
+ */
+
+NocSonicMixer.prototype.playPromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "playPromotedFile", [this.id]);
+};
+
+
+ /**
+ *       NOTES: pause play back of promoted file
+ *
+ */
+
+NocSonicMixer.prototype.pausePromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "pausePromotedFile", [this.id]);
+};
+
+ /**
+ *       NOTES: start promoted file over at zero position
+ *
+ */
+
+NocSonicMixer.prototype.rewindPromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "rewindPromotedFile", [this.id]);
+};
+
+
+ /**
+ *       NOTES: the Gain (Volume) level should begin at .75
+ *
+ *      @param promotedFileGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ */
+
+NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
+
+    exec(null, null, "NocSonicMixer", "setPromotedFileVolume", [this.id, promotedFileGain]);
+};
+
+
+
+/**
+ *       NOTES:Level of PromotedFile amplitude
+ *
+ *
+ *       event return volume levels
+ *
+ *
+ */
+
+NocSonicMixer.prototype.broadcastPomotedFileAmplitude = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastPomotedFileAmplitude", [this.id]);
+};
+
+
+ /**
+ *       NOTES: Retrieve File Created
+ *
+ */
+
+NocSonicMixer.prototype.getPromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "getPromotedFile", [this.id]);
+};
+
+
+
+
+/*
+ *     Notes: delete file and any resources
+ *            -- Deleting a file should not destroy masterMix buffers
+ *            -- releases all resources use to play back promoted file
+ *
+ */
+
+NocSonicMixer.prototype.deletePromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "deleteMasterFile", [this.id]);
+};
 
 
 /**
@@ -581,57 +783,51 @@ NocSonicMixer.prototype.setMasterMixVolume = function(mixerGain) {
  * @param msgType       The 'type' of update this is
  * @param value         Use of value is determined by the msgType
  */
-NocSonicMedia.onStatus = function(id, msgType, value) {
+NocSonicMixer.onStatus = function(id, msgType, value) {
 
-    var media = nocMixObject[id];
+    var nsMixer = nocMixObject[id];
 
-    if(media) {
+    if(nsMixer) {
         switch(msgType) {
-            case NocSonicMedia.MEDIA_STATE :
-                media.statusCallback && media.statusCallback(value);
-                if(value == NocSonicMedia.MEDIA_STOPPED) {
-                    media.successCallback && media.successCallback();
-                }
+            case NocSonicMixer.NSMIXER_STATE :
+                nsMixer.statusCallback && nsMixer.statusCallback(value);
                 break;
-            case NocSonicMedia.MEDIA_DURATION :
-                media._duration = value;
+            case NocSonicMixer.NSMIXER_ERROR :
+                nsMixer.errorCallback && nsMixer.errorCallback(value);
                 break;
-            case NocSonicMedia.MEDIA_ERROR :
-                media.errorCallback && media.errorCallback(value);
-                break;
-            case NocSonicMedia.MEDIA_POSITION :
-                media._position = Number(value);
+            case NocSonicMixer.MEDIA_POSITION :
+                nsMixer._position = Number(value);
                 break;
             default :
-                console.error && console.error("Unhandled NocSonicMedia.onStatus :: " + msgType);
+                console.error && console.error("Unhandled NocSonicMixer.onStatus :: " + msgType);
                 break;
         }
     }
     else {
-         console.error && console.error("Received NocSonicMedia.onStatus callback for unknown media :: " + id);
+         console.error && console.error("Received NocSonicMixer.onStatus callback for unknown media :: " + id);
     }
 
 };
 
-module.exports = NocSonicMedia;
+module.exports = NocSonicMixer;
 
 function onMessageFromNative(msg) {
     if (msg.action == 'status') {
-        NocSonicMedia.onStatus(msg.status.id, msg.status.msgType, msg.status.value);
+        NocSonicMixer.onStatus(msg.status.id, msg.status.msgType, msg.status.value);
     } else {
         throw new Error('Unknown media action' + msg.action);
     }
 }
 
-if (cordova.platformId === 'android' || cordova.platformId === 'amazon-fireos' || cordova.platformId === 'windowsphone') {
+if (cordova.platformId === 'android' || cordova.platformId === 'windowsphone') {
 
     var channel = require('cordova/channel');
 
-    channel.createSticky('onNocSonicMediaPluginReady');
-    channel.waitForInitialization('onNocSonicMediaPluginReady');
+    channel.createSticky('onNocSonicMixerPluginReady');
+    channel.waitForInitialization('onNocSonicMixerPluginReady');
 
     channel.onCordovaReady.subscribe(function() {
-        exec(onMessageFromNative, undefined, 'NocSonicMedia', 'messageChannel', []);
-        channel.initializationComplete('onNocSonicMediaPluginReady');
+        exec(onMessageFromNative, undefined, 'NocSonicMixer', 'messageChannel', []);
+        channel.initializationComplete('onNocSonicMixerPluginReady');
     });
 }
