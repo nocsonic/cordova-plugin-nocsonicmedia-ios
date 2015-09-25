@@ -139,7 +139,6 @@ NocSonicMixer.prototype.playSonicLoop = function(options) {
  *     NOTES: Pause play back of Sonic Loop, if  Recording (audio capturing) in progess do not stop,
  *            the Recording, simply set Gain Amount to mute
  *
- *      pauseSonicLoop();
  */
 
 
@@ -252,7 +251,7 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
  *      NOTES: Audio Capture from device input (with or without microphone) and, if it exist, the current looping
  *             sonic.
  *
- *      a)  Simultaneoulsy, (using native Audio Api syquencer, audio manager, etc) begin capturing audio from microphone
+ *      a)  Simultaneoulsy, (using native Audio Api sequencer, audio manager, etc) begin capturing audio from microphone
  *            (may be external headset with microphone, or just the native device microphone) and write into Vocal Track Buffer
  *             and
  *             If current looping beat exist (even if it has been paused) begin to write into a sonic Beat Buffer
@@ -374,65 +373,51 @@ NocSonicMixer.prototype.broadcastInputDeviceAmplitude = function() {
 };
 
 
-/**
- *       NOTES:Level of Audio being Capture from Input
- *
- *
- */
-
-
-NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
-
-    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
-};
-
-/**
- *       NOTES:Level of Audio being Capture from Input
- *
- *
- */
-
-NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
-
-    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
-};
-
-
-
-
 
 
 /**
  *     NOTES: Simultaneously play audio back from Audio Beat Buffer and And Audio Vocal Buffer
  *
- *      playTwoTracks();
+ *       -- set both Vocal Track Buffer and  Sonic Track Buffer position to 0
+ *       -- begin playing both Vocal Track Buffer and  Sonic Track Buffer  tacks simultaneously
+ *
  */
+
+NocSonicMixer.prototype.playTwoTracks = function() {
+
+    exec(null, null, "NocSonicMixer", "playTwoTracks", [this.id]);
+};
+
 
 
 
 /**
  *     NOTES: Simultaneously pause audio from Audio Beat Buffer and And Audio Vocal Buffer
  *
+ *       -- simultaneously pause both Vocal Track Buffer and  Sonic Track Buffer  from playing
+ *
  *      pauseTwoTracks();
  */
 
+NocSonicMixer.prototype.pauseTwoTracks = function() {
 
-
-/**
- *     NOTES: Simultaneously stop audio play from Audio Beat Buffer and And Audio Vocal Buffer
- *            and start playing each buffer from beginning
- *
- *      rewindTwoTracks();
- */
+    exec(null, null, "NocSonicMixer", "pauseTwoTracks", [this.id]);
+};
 
 
  /**
  *     NOTES: the Gain (Volume) level should begin at .75
  *
- *      @param beatGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *      @param sonicBufferGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *      updateBeatTrackVolume(beatGain);
+ *     setSonicBufferTrackVolume(sonicBufferGain);
  */
+
+NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
+
+    exec(null, null, "NocSonicMixer", "setSonicBufferTrackVolume", [this.id, sonicBufferGain]);
+};
+
 
 
 /**
@@ -444,13 +429,19 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
  */
 
 
+
  /**
- *       NOTES: the Gain (Volume) level should begin at .75
+ *     NOTES: the Gain (Volume) level should begin at .75
  *
- *      @param vocalGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *      @param vocalBufferGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *      updateVocalTrackVolume(beatGain);
+ *     setVocalBufferTrackVolume(vocalBufferGain);
  */
+
+NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
+
+    exec(null, null, "NocSonicMixer", "setVocalBufferTrackVolume", [this.id, vocalBufferGain]);
+};
 
 
 /**
@@ -461,12 +452,30 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
  *
  */
 
+
 /**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
+ *       NOTES:Level of Audio being Capture from Input
  *
- *       deleteTwoTracks()
  *
  */
+NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+};
+
+
+
+/**
+ *       NOTES:Level of Audio being Capture from Input
+ *
+ *
+ */
+NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+};
+
+
 
 /**
  *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
@@ -474,14 +483,26 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
  *       createMasterMix();
  *
  */
+NocSonicMixer.prototype.createMasterMix = function() {
+
+    exec(null, null, "NocSonicMixer", "createMasterMix", [this.id]);
+};
 
 
 /**
  *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
  *
- *       playMasterMix();
+ *
+ *       -- set master mix back to 0
+ *       -- playing master mix from beginning
+ *
  *
  */
+NocSonicMixer.prototype.playMasterMix = function() {
+
+    exec(null, null, "NocSonicMixer", "playMasterMix", [this.id]);
+};
+
 
 
 
@@ -492,25 +513,27 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
  *       stopMasterMix();
  *
  */
+NocSonicMixer.prototype.stopMasterMix = function() {
 
-
-
-/**
- *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
- *
- *       rewindMasterMix();
- *
- */
+    exec(null, null, "NocSonicMixer", "stopMasterMix", [this.id]);
+};
 
 
 
  /**
  *       NOTES: the Gain (Volume) level should begin at .75
  *
- *      @param masterMixGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *      updateMasterMixVolume(masterMixGain);
+ *      @param mixerGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
  */
+
+NocSonicMixer.prototype.setMasterMixVolume = function(mixerGain) {
+
+    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, mixerGain]);
+};
+
+
 
 
 
@@ -547,65 +570,8 @@ NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
  *                                  errorCallback(int errorCode) - OPTIONAL
  * @param statusCallback        The callback to be called when media status has changed.
  *                                  statusCallback(int statusCode) - OPTIONAL
- *
- *
- *
- *
- *
- *
  */
 
-//
-
-
-/**
- * Get duration of an audio file.
- * The duration is only set for audio that is playing, paused or stopped.
- *
- * @return      duration or -1 if not known.
- */
-NocSonicMedia.prototype.getDuration = function() {
-    return this._duration;
-};
-
-/**
- * Get position of audio.
- */
-NocSonicMedia.prototype.getCurrentPosition = function(success, fail) {
-    var me = this;
-    exec(function(p) {
-        me._position = p;
-        success(p);
-    }, fail, "NocSonicMedia", "getCurrentPositionAudio", [this.id]);
-};
-
-/**
- * Start recording audio file.
- */
-NocSonicMedia.prototype.startRecord = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "startRecordingAudio", [this.id, this.sonicSrc]);
-};
-
-/**
- * Stop recording audio file.
- */
-NocSonicMedia.prototype.stopRecord = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "stopRecordingAudio", [this.id]);
-};
-
-/**
- * Release the resources.
- */
-NocSonicMedia.prototype.release = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "release", [this.id]);
-};
-
-/**
- * Adjust the volume.
- */
-NocSonicMedia.prototype.setVolume = function(volume) {
-    exec(null, null, "NocSonicMedia", "setVolume", [this.id, volume]);
-};
 
 /**
  * Audio has status update.
