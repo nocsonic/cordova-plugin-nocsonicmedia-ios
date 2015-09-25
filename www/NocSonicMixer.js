@@ -207,6 +207,9 @@ NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
  *       turns on event status issuing
  *       broadcastLevelOfSonicMeter()
  *
+ *       http://lovingod.host.sk/iphone/developers/avmeter_colon_build_a_vu_meter.html
+ *
+ *
  *       https://github.com/YogendraSharma2007/android-spl-meter
  *       https://github.com/AdFabConnect/ViewMeterCordova
  *
@@ -223,7 +226,7 @@ NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
 
 NocSonicMixer.prototype.broadcastSonicLoopMeter = function() {
 
-    exec(null, null, "NocSonicMixer", "broadcastSonicLoopMeter", [this.id, sonicLoopGain]);
+  //  exec(null, null, "NocSonicMixer", "broadcastSonicLoopMeter", [this.id, sonicLoopGain]);
 };
 
 
@@ -242,6 +245,10 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
 /**
  *     Recording Session View
  *
+ *
+ * */
+
+ /**
  *      NOTES: Audio Capture from device input (with or without microphone) and, if it exist, the current looping
  *             sonic.
  *
@@ -255,14 +262,13 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
  *             - two Distinct Buffers Created    Vocal Track Buffer  and Sonic Track Buffer
  *             - begin writing to both Buffers  at the same time...even if the sonicLoop is PAUSED or
  *               even if the user is silent (has not began Vocalizing)
- *             - Sample data that is being written to each buffer should be done with 16 bit PCM
+ *             - Sample data that is being written to each buffer should be done with 16 bit PCM, (stereo)
  *
- *      c) If stopTime has NOT been set, the recording stop auotmatically after 31 seconds, the Maximum amount of recording time
+ *      c) If stopTime has NOT been set, the recording stop automatically after 31 seconds, the maximum amount of recording time
  *            is 45 seconds and should only be set to that amount of time by the   @param stopTime
  *           - BEAT stops playing and stops writing to Sonic Track Buffer
  *           - MIC or input Device Is closed(prevented from capturing) and stop writing to Vocal Track Buffer
  *           
- *          
  *
  *      d) Hopefully the state of the sonicLoop can be deduced from the native code implementation, however, if you 
  *         find that it neccessary to pass the state, it can be added to the function call by getting state locally 
@@ -275,98 +281,125 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
  *          -- any buffers created specfically for capturing should be deleted and memory released
  *
  *      
- *      
- *      @param stopTime:number;
  *
- *      startNocRecordingSession(stopTime );
+ *      @param minCaptureTime:number; //milliseconds, default 5 seconds(5000)
+ *      @param stopTime:number;   //milliseconds, default 31 seconds (31000)
+ *      @param softStopTime:number; //milliseconds, default 3 seconds (3000)
+ *      @param syncStop:bool;   // default true, when "true", while wrting caputre audio from input device stops writing to
+  *                                Vocal Track Buffer, writing sonicLoop samples to Sonic Track Buffer does
+  *                                not stop until softStopTime has elapsed.
+  *                                -- If the amount of time left for recordings is less than 3 seconds, then stops writing to
+  *                                Vocal Track Buffer, but continue to write to Sonic Track Buffer for time remaining.
+ *
+ *      startNocRecordingSession(minCaptureTime, stopTime, softStopTime, syncStop);
  */
 
 
-NocSonicMedia.prototype.startNocRecordingSession = function(stopTime) {
-
+NocSonicMixer.prototype.startNocRecordingSession = function(stopTime) {
 
 
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- *      NOTES: Audio Capture from device input (with or without microphone).
+ *      NOTES: Just as would happen if the default 31 seconds elapsed, device stops capturing all audio from device
+ *             inputs, and stops writing to the Vocal Track Buffer and Sonic Track Buffer, release any allocated memory
+ *             ...retain sampled buffer data unless deleter or clear is determined to be necessary.
  *
- *      a) If current looping beat exist (even if it has been paused) begins to write into Audio Beat Buffer
- *         from its current position ( thus, the beat should not be forced to start at the zero position);
+ *             -- if stopNocRecordingSession() is executed before "minCaptureTime" (5 seconds) has occurred..
+ *                   !!! the "softStopTime" should encompass the "minCaptureTime", it is dependent on the
+ *                   amount of time that elapsed since the startNocRecordingSession() has been called.
  *
- *      b) Captured audio from microphone or other input should be directly  write into Audio Vocal track Buffer,
- *           separate from beat track
- *
- *      c) If stopTime has not been set, the recording stop after 31 seconds, the Maximum amount of recording time
- *        is 45 seconds.
- *           - BEAT stops playing and stop writing to audio beat buffer
- *           - MIC or input Device Is closed(prevented from capturing) and stop writing to vocal buffer
+ *                  * Unless sonicLoop has been paused it does not stop playing, but does stop writing to
+ *                    Sonic Track Buffer and the Buffer is cleared
+ *                  * Stop Writing to Vocal Track Buffer and Buffer is cleared
+ *                  * Message Event Status is broadcast informing that the 5 second limit was not met
  *
  *
- *      d) If STUDIO_STATE == recording and STUDIO_BEAT_END_ATTACHED == true
- *         then perform c) actions
+ *             --  when "stopNocRecordingSession()" is called, by default 'syncStop' should be true, which
+ *                 signals that the writing to the Sonic Track Buffer should not stop until "softStopTime"
+ *                 (default 3000 milliseconds) has elapsed.
  *
- *      @param stopTime:number;
+ *             --
  *
- *      nocStartRecording(stopTime );
- */
+ *
+ * */
 
 
-/**
- * Start recording audio file.
- *  Current State can be
- *
- *
- */
-NocSonicMedia.prototype.startRecord = function() {
-    exec(null, this.errorCallback, "NocSonicMedia", "startRecordingAudio", [this.id, this.sonicSrc]);
+NocSonicMedia.prototype.stopNocRecordingSession = function() {
+    var me = this;
+    exec(function() {
+        me._sonicPosition = 0;
+    }, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
 };
-
-
-
-
 
 
 
  /**
- *     NOTES: the Gain (Volume) level should begin at .75, the volume of input coming in
+ *     NOTES: the amplitude (Volume) level should begin at .75, the volume of input coming in
  *
  *      @param  inputGain: Number; (0-1)  0 being mute, 1 being the loudest
  *
- *      updateInputVolume(inputGain);
+ *
  */
 
+NocSonicMixer.prototype.setInputAmplitude= function(inputAmplitude) {
+    exec(null, null, "NocSonicMixer", "setInputAmplitude", [this.id, inputAmplitude]);
+};
 
 
 /**
- *       NOTES:Level of Audio being Caputre from Input
+  *      ---While not expressed as separate function the ability to change the volume of the sonicLoop
+  *         will be available to user
+ *
+ *       --The level of audio peak of the sonicLoop should also continue to be broadcast
+ *
+ *       TODO# Does the audio peak broadcast during a record session need to be represented in a different
+ *       during capturing of audio
+**/
+
+
+/**
+ *       NOTES:Level of Audio being Capture from Input
  *
  *
  *       event return volume levels
  *
- *       broadcastLevelOfAudioRecordingMeter()
+ *
+ */
+
+NocSonicMixer.prototype.broadcastInputDeviceAmplitude = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+};
+
+
+/**
+ *       NOTES:Level of Audio being Capture from Input
  *
  *
  */
+
+
+NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+};
+
+/**
+ *       NOTES:Level of Audio being Capture from Input
+ *
+ *
+ */
+
+NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
+
+    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+};
+
+
+
+
 
 
 /**
