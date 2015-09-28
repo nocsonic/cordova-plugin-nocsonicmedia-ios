@@ -39,35 +39,48 @@ var nocMixObject = { };
  * */
 
 var NocSonicMixer = function(successCallback, errorCallback, statusCallback){
-      for(var prop in ad) {
+     for(var prop in ad) {
         if (nocMixObject.hasOwnProperty(prop)) {
             //check for listeners before destroying
-
             delete nocMixObject[prop];
         }
      }
      this.id = utils.createUUID();
-     nocMixObject[this.id] = this;
-     this.successCallback    = successCallback;
-     this.errorCallback      = errorCallback;
-     this.statusCallback     = statusCallback;
+     nocMixObject[this.id]       =  this;
+     this._sonicSrc              =  '';
+     this._nocSrc                =  '';
+     this._sonicLoopMeter        =  {left:-1, right:-1};
+     this._vocalInputMeter       =  {left:-1, right:-1};
+     this._nocTrackMeter         =  {left:-1, right:-1};
+     this._sonicTrackMeter       =  {left:-1, right:-1};
+     this._masterMixMeter        =  {left:-1, right:-1};
+     this._masterMixPosition     =  -1;
+     this._masterMixDuration     =  -1;
+     this._promotedFileMeter     =  {left:-1, right:-1};
+     this._promotedFilePosition  =  -1;
+     this._promotedFileDuration  =  -1;
+     this._promotedFileLocation  =  null;
+     this.successCallback        =  successCallback;
+     this.errorCallback          =  errorCallback;
+     this.statusCallback         =  statusCallback;
+
      exec(null, this.errorCallback, "NocSonicMixer", "create", [this.id]);
 }
 
 
 // NocSonicMixer messages
 NocSonicMixer.NSMIXER_STATE = 1;
-//NocSonicMixer.MEDIA_DURATION = 2;
-//NocSonicMixer.NSMIXER_SONICLOOP_POSITION = 3;
-//NocSonicMixer.NSMIXER_VOCALTRACK_POSITION = 4;
-//NocSonicMixer.NSMIXER_SONICTRACK_POSITION = 5;
-//NocSonicMixer.NSMIXER_MASTERMIX_POSITION = 5;
-//NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION = 6;
-NocSonicMixer.NSMIXER_SONICLOOP_VU_METER= 7;
-NocSonicMixer.NSMIXER_VOCALTRACK_VU_METER = 8;
-NocSonicMixer.NSMIXER_SONICTRACK_VU_METER = 9;
-NocSonicMixer.NSMIXER_MASTERMIX_VU_METER = 10;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_VU_METER = 11;
+NocSonicMixer.NSMIXER_SONICLOOP_VU_METER= 2;
+NocSonicMixer.NSMIXER_VOCALINPUT_VU_METER = 3;
+NocSonicMixer.NSMIXER_NOCTRACK_VU_METER = 4;
+NocSonicMixer.NSMIXER_SONICTRACK_VU_METER = 5;
+NocSonicMixer.NSMIXER_MASTERMIX_VU_METER = 6;
+NocSonicMixer.NSMIXER_MASTERMIX_POSITION = 7;
+NocSonicMixer.NSMIXER_MASTERMIX_DURATION = 8;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_VU_METER = 9;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_DURATION = 10;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION = 11;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PATH = 12;
 
 NocSonicMixer.NSMIXER_ERROR = 99;
 
@@ -185,9 +198,12 @@ NocSonicMixer.get = function(id) {
 
 
 NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
-    this.sonicSrc = sonicSrc;
-    this._sonicPosition = -1;
-    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadSonicTrack", [this.id, this.sonicSrc]);
+    if(this._sonicSrc){
+        //release all current resources used for sonicSrc
+    }
+    this._sonicSrc        =  sonicSrc;
+    this._sonicLoopMeter =  {left:-1, right:-1};
+    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadSonicTrack", [this.id, this._sonicSrc]);
 };
 
 
@@ -205,7 +221,7 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
  */
 
 NocSonicMixer.prototype.playSonicLoop = function(options) {
-    exec(null, null, "NocSonicMedia", "startPlayingSonicLoop", [this.id, this.sonicSrc, options]);
+    exec(null, null, "NocSonicMedia", "startPlayingSonicLoop", [this.id, this._sonicSrc, options]);
 };
 
 
@@ -217,7 +233,7 @@ NocSonicMixer.prototype.playSonicLoop = function(options) {
 
 
 NocSonicMixer.prototype.pauseSonicLoop = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "pausePlayingSonicLoop", [this.id]);
+    exec(null, this.errorCallback, "NocSonicMixer", "pausePlayingSonicLoop", [this.id,  this._sonicSrc]);
 };
 
 
@@ -236,10 +252,7 @@ NocSonicMixer.prototype.pauseSonicLoop = function() {
  * */
 
 NocSonicMedia.prototype.stopSonicLoop = function() {
-    var me = this;
-    exec(function() {
-        me._sonicPosition = 0;
-    }, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id]);
+    exec(null, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id], 0);
 };
 
 
@@ -254,10 +267,7 @@ NocSonicMedia.prototype.stopSonicLoop = function() {
  * Seek or jump to a new time in the track..
  */
 NocSonicMixer.prototype.sonicLoopRewind = function() {
-    var me = this;
-    exec(function() {
-        me._sonicPosition = 0;
-    }, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
+    exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
 };
 
  /**
@@ -297,9 +307,13 @@ NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
  *
  */
 
-NocSonicMixer.prototype.broadcastSonicLoopMeter = function() {
-
-  //  exec(null, null, "NocSonicMixer", "broadcastSonicLoopMeter", [this.id, sonicLoopGain]);
+NocSonicMixer.prototype.getSonicLoopMeter = function(success, fail) {
+    var me = this;
+    exec(function(sonicLoopMeter) {
+            me._sonicLoopMeter = sonicLoopMeter;
+            success(sonicLoopMeter);
+            },
+            fail, "NocSonicMedia", "getSonicLoopMeter", [this.id]);
 };
 
 
@@ -368,9 +382,9 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
  */
 
 
-NocSonicMixer.prototype.startNocRecordingSession = function(stopTime) {
-
-
+NocSonicMixer.prototype.startNocRecordingSession = function (options) {
+    this._nocSrc = options.nocSrc;
+    exec(null, this.errorCallback, "NocSonicMixer", "startNocRecordingSession", [this.id, options]);
 };
 
 
@@ -400,10 +414,7 @@ NocSonicMixer.prototype.startNocRecordingSession = function(stopTime) {
 
 
 NocSonicMedia.prototype.stopNocRecordingSession = function() {
-    var me = this;
-    exec(function() {
-        me._sonicPosition = 0;
-    }, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
+    exec(null, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
 };
 
 
@@ -441,9 +452,13 @@ NocSonicMixer.prototype.setInputAmplitude= function(inputAmplitude) {
  *
  */
 
-NocSonicMixer.prototype.broadcastInputDeviceAmplitude = function() {
-
-    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
+    var me = this;
+    exec(function(vocalInputMeter) {
+            me._vocalInputMeter = vocalInputMeter;
+            success(vocalInputMeter);
+            },
+            fail, "NocSonicMedia", "getVocalInputMeter", [this.id]);
 };
 
 
@@ -513,6 +528,15 @@ NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
  */
 
 
+NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
+    var me = this;
+    exec(function(sonicTrackMeter) {
+            me._sonicTrackMeter = sonicTrackMeter;
+            success(sonicTrackMeter);
+            },
+            fail, "NocSonicMedia", "getSonicTrackMeter", [this.id]);
+};
+
 
  /**
  *     NOTES: Adjustments to the volume of the Vocal Buffer Track present in the final
@@ -522,9 +546,9 @@ NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
   *         call playTwoTracks() the volume change  should be evident.
  */
 
-NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
+NocSonicMixer.prototype.setNocBufferTrackVolume = function(nocBufferGain) {
 
-    exec(null, null, "NocSonicMixer", "setVocalBufferTrackVolume", [this.id, vocalBufferGain]);
+    exec(null, null, "NocSonicMixer", "setNocBufferTrackVolume", [this.id, nocBufferGain]);
 };
 
 
@@ -537,6 +561,15 @@ NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
  */
 
 
+NocSonicMixer.prototype.getNocTrackMeter = function(success, fail) {
+    var me = this;
+    exec(function(nocTrackMeter ) {
+            me._nocTrackMeter = nocTrackMeter ;
+            success(nocTrackMeter );
+            },
+            fail, "NocSonicMedia", "getNocInputMeter", [this.id]);
+};
+
 
 /**
  *       NOTES:  deleteSonicTrackBuffer()  will be called when user has decided masterMix is acceptable
@@ -546,7 +579,7 @@ NocSonicMixer.prototype.setVocalBufferTrackVolume = function(vocalBufferGain) {
  */
 NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
 
-    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+    exec(null, null, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
 };
 
 
@@ -557,9 +590,9 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
  *
  *
  */
-NocSonicMixer.prototype.deleteVocalTrackBuffer = function() {
+NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
 
-    //exec(null, null, "NocSonicMixer", "broadcastInput", [this.id]);
+    exec(null, null, "NocSonicMixer", "deleteNocTrackBuffer", [this.id]);
 };
 
 
@@ -604,9 +637,6 @@ NocSonicMixer.prototype.playMasterMix = function() {
 };
 
 
-
-
-
 /**
  *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
  *
@@ -634,6 +664,63 @@ NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
     exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
 };
 
+/**
+ *       NOTES:Level of Volume
+ *       event return volume levels
+ *
+ *       broadcastVocalTrackMeter()
+ *
+ */
+
+
+NocSonicMixer.prototype.getMasterMixMeter = function(success, fail) {
+    var me = this;
+    exec(function(masterMixMeter ) {
+            me._masterMixMeter = masterMixMeter ;
+            success(masterMixMeter );
+            },
+            fail, "NocSonicMedia", "getMasterMixMeter", [this.id]);
+};
+
+
+
+ /**
+ *       NOTES: the Gain (Volume) level should begin at .75
+ *       --changes to volume do not effect final promoted mix, should simply simulate
+  *        what playback will sound like from file creation
+ *
+ *      @param masterMixGain: Number; (0-1)  0 being mute, 1 being the loudest
+ *
+ */
+
+NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
+
+    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
+};
+
+
+/**
+ * Get position of audio.
+ */
+NocSonicMixer.prototype.getCurrentMasterMixPosition = function(success, fail) {
+    var me = this;
+        exec(function(masterMixPosition) {
+            me._masterMixPosition = masterMixPosition;
+            success(masterMixPosition);
+        },
+        fail, "NocSonicMixer", "getCurrentMasterMixPosition", [this.id]);
+};
+
+/**
+ * Get duration of an audio file.
+ * The duration is only set for audio that is playing, paused or stopped.
+ *
+ * @return      duration or -1 if not known.
+ */
+
+NocSonicMixer.prototype.getCurrentMasterMixDuration= function() {
+        return this._masterMixDuration;
+};
 
 
 /**
@@ -646,7 +733,7 @@ NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
 NocSonicMixer.prototype.deleteMasterMix = function() {
 
-    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id]);
+    exec(null, null, "NocSonicMixer", "deleteMasterMix", [this.id]);
 };
 
 
@@ -695,14 +782,27 @@ NocSonicMixer.prototype.pausePromotedFile = function() {
     exec(null, null, "NocSonicMixer", "pausePromotedFile", [this.id]);
 };
 
+
  /**
- *       NOTES: start promoted file over at zero position
+ *       NOTES: return the duration of the promotedFile
  *
  */
 
-NocSonicMixer.prototype.rewindPromotedFile = function() {
+NocSonicMixer.prototype.promotedFileDuration = function() {
+        return this._promotedFileDuration;
+};
 
-    exec(null, null, "NocSonicMixer", "rewindPromotedFile", [this.id]);
+ /**
+ *       NOTES: move promoted file to spcific position
+ *
+ */
+
+NocSonicMixer.prototype.promotedFileSseekTo = function(milliseconds) {
+
+    var me = this;
+    exec(function(p) {
+        me._promotedFilePosition = p;
+    }, this.errorCallback,"NocSonicMixer", "promotedFileSseekTo", [this.id,milliseconds]);
 };
 
 
@@ -728,10 +828,13 @@ NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
  *
  *
  */
-
-NocSonicMixer.prototype.broadcastPomotedFileAmplitude = function() {
-
-    //exec(null, null, "NocSonicMixer", "broadcastPomotedFileAmplitude", [this.id]);
+NocSonicMixer.prototype.getPromotedFileMeter = function(success, fail) {
+    var me = this;
+    exec(function(promotedFileMeter ) {
+            me._promotedFileMeter = promotedFileMeter ;
+            success(promotedFileMeter );
+            },
+            fail, "NocSonicMedia", "getPromotedFileMeter", [this.id]);
 };
 
 
@@ -741,11 +844,17 @@ NocSonicMixer.prototype.broadcastPomotedFileAmplitude = function() {
  */
 
 NocSonicMixer.prototype.getPromotedFile = function() {
-
-    exec(null, null, "NocSonicMixer", "getPromotedFile", [this.id]);
+        return this._promotedFileLocation;
 };
 
 
+
+/**
+ * Release the resources.
+ */
+NocSonicMixer.prototype.releasePromotedFile = function() {
+    exec(null, this.errorCallback, "NocSonicMixer", "releasePromotedFile", [this.id]);
+};
 
 
 /*
@@ -795,8 +904,38 @@ NocSonicMixer.onStatus = function(id, msgType, value) {
             case NocSonicMixer.NSMIXER_ERROR :
                 nsMixer.errorCallback && nsMixer.errorCallback(value);
                 break;
-            case NocSonicMixer.MEDIA_POSITION :
-                nsMixer._position = Number(value);
+            case NocSonicMixer.NSMIXER_SONICLOOP_VU_METER :
+                nsMixer._sonicLoopMeter = Object(value);
+                break;
+            case NocSonicMixer.NSMIXER_VOCALINPUT_VU_METER :
+                nsMixer._vocalInputMeter = Object(value);
+                break;
+            case NocSonicMixer.NSMIXER_NOCTRACK_VU_METER :
+                nsMixer._nocTrackMeter = Object(value);
+                break;
+            case NocSonicMixer.NSMIXER_SONICTRACK_VU_METER :
+                nsMixer._sonicTrackMeter = Object(value);
+                break;
+            case NocSonicMixer.NSMIXER_MASTERMIX_VU_METER :
+                nsMixer._masterMixMeter = Object(value);
+                break;
+            case NocSonicMixer.NSMIXER_MASTERMIX_POSITION :
+                nsMixer._masterMixPosition = Number(value);
+                break;
+            case NocSonicMixer.NSMIXER_MASTERMIX_DURATION :
+                nsMixer._masterMixDuration = Number(value);
+                break;
+            case NocSonicMixer.NSMIXER_PROMOTEDFILE_VU_METER :
+                nsMixer._promotedFileMeter = Number(value);
+                break;
+            case NocSonicMixer.NSMIXER_PROMOTEDFILE_DURATION :
+                nsMixer._promotedFilePosition = Number(value);
+                break;
+            case NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION :
+                nsMixer._promotedFilePosition = Number(value);
+                break;
+            case NocSonicMixer.NSMIXER_PROMOTEDFILE_PATH :
+                nsMixer._promotedFileLocation = String(value);
                 break;
             default :
                 console.error && console.error("Unhandled NocSonicMixer.onStatus :: " + msgType);
