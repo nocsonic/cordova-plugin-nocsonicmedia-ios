@@ -203,7 +203,7 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
     }
     this._sonicSrc        =  sonicSrc;
     this._sonicLoopMeter =  {left:-1, right:-1};
-    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadSonicTrack", [this.id, this._sonicSrc]);
+    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadedSonicTrack", [this.id, this._sonicSrc]);
 };
 
 
@@ -233,7 +233,7 @@ NocSonicMixer.prototype.playSonicLoop = function(options) {
 
 
 NocSonicMixer.prototype.pauseSonicLoop = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "pausePlayingSonicLoop", [this.id,  this._sonicSrc]);
+    exec(null, this.errorCallback, "NocSonicMixer", "pauseSonicLoop", [this.id,  this._sonicSrc]);
 };
 
 
@@ -370,9 +370,9 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
  *      
  *
  *      @param minCaptureTime:number; //milliseconds, default 5 seconds(5000)
- *      @param stopTime:number;   //milliseconds, default 31 seconds (31000)
- *      @param softStopTime:number; //milliseconds, default 3 seconds (3000)
- *      @param syncStop:bool;   // default true, when "true", while wrting caputre audio from input device stops writing to
+ *      @param maxCaputreTime:number;   //milliseconds, default 31 seconds (31000)
+ *      @param decayCaptureTime:number; //milliseconds, default 3 seconds (3000)
+ *      @param syncTwoTrackCapture:bool;   // default true, when "true", while writing cautred audio from input device stops writing to
   *                                Vocal Track Buffer, writing sonicLoop samples to Sonic Track Buffer does
   *                                not stop until softStopTime has elapsed.
   *                                -- If the amount of time left for recordings is less than 3 seconds, then stops writing to
@@ -788,8 +788,25 @@ NocSonicMixer.prototype.pausePromotedFile = function() {
  *
  */
 
-NocSonicMixer.prototype.promotedFileDuration = function() {
+NocSonicMixer.prototype.getPromotedFileDuration = function() {
         return this._promotedFileDuration;
+};
+
+
+
+
+ /**
+ *       NOTES: return the duration of the promotedFile
+ *
+ */
+
+NocSonicMixer.prototype.getPromotedFilePosition = function(success, fail) {
+    var me = this;
+        exec(function(promotedFilePosition) {
+            me._promotedFilePosition = promotedFilePosition;
+            success(promotedFilePosition);
+        },
+        fail, "NocSonicMixer", "getPromotedFilePosition", [this.id]);
 };
 
  /**
@@ -797,7 +814,7 @@ NocSonicMixer.prototype.promotedFileDuration = function() {
  *
  */
 
-NocSonicMixer.prototype.promotedFileSseekTo = function(milliseconds) {
+NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
 
     var me = this;
     exec(function(p) {
