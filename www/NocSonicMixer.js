@@ -501,6 +501,34 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
 };
 
 
+
+/**
+ *     NOTES: Stop audio from Audio Beat Buffer and And Audio Vocal Buffer
+ *
+ *       -- both buffer positions are set back to zero
+ *
+ */
+
+NocSonicMixer.prototype.stopTwoTracks = function() {
+
+    exec(null, null, "NocSonicMixer", "stopTwoTracks", [this.id]);
+};
+
+
+
+/**
+ *     NOTES: Simultaneously rewind audio both Buffers back to 0(zero) and begin palying
+ *
+ */
+
+NocSonicMixer.prototype.rewindTwoTracks = function() {
+
+    exec(null, null, "NocSonicMixer", "rewindTwoTracks", [this.id]);
+};
+
+
+
+
  /**
  *     NOTES: Adjustments to the volume of the Sonic Buffer Track present in the final
  *     master and proceeding  .m4a file creation.
@@ -546,9 +574,9 @@ NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
   *         call playTwoTracks() the volume change  should be evident.
  */
 
-NocSonicMixer.prototype.setNocBufferTrackVolume = function(nocBufferGain) {
+NocSonicMixer.prototype.setNocTrackVolume = function(nocBufferGain) {
 
-    exec(null, null, "NocSonicMixer", "setNocBufferTrackVolume", [this.id, nocBufferGain]);
+    exec(null, null, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
 };
 
 
@@ -594,8 +622,6 @@ NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
 
     exec(null, null, "NocSonicMixer", "deleteNocTrackBuffer", [this.id]);
 };
-
-
 
 
 
@@ -784,6 +810,17 @@ NocSonicMixer.prototype.pausePromotedFile = function() {
 
 
  /**
+ *       NOTES: stop play back of promoted file, set position to zero
+ *
+ */
+
+NocSonicMixer.prototype.stopPromotedFile = function() {
+
+    exec(null, null, "NocSonicMixer", "stopPromotedFile", [this.id]);
+};
+
+
+ /**
  *       NOTES: return the duration of the promotedFile
  *
  */
@@ -860,7 +897,7 @@ NocSonicMixer.prototype.getPromotedFileMeter = function(success, fail) {
  *
  */
 
-NocSonicMixer.prototype.getPromotedFile = function() {
+NocSonicMixer.prototype.getPromotedFileLocation = function() {
         return this._promotedFileLocation;
 };
 
