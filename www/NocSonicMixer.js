@@ -203,7 +203,7 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
     }
     this._sonicSrc        =  sonicSrc;
     this._sonicLoopMeter =  {left:-1, right:-1};
-    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadedSonicTrack", [this.id, this._sonicSrc]);
+  //exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadedSonicTrack", [this.id, this._sonicSrc]);
 };
 
 
@@ -221,7 +221,7 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
  */
 
 NocSonicMixer.prototype.playSonicLoop = function(options) {
-    exec(null, null, "NocSonicMedia", "startPlayingSonicLoop", [this.id, this._sonicSrc, options]);
+  //exec(null, null, "NocSonicMedia", "startPlayingSonicLoop", [this.id, this._sonicSrc, options]);
 };
 
 
@@ -233,7 +233,7 @@ NocSonicMixer.prototype.playSonicLoop = function(options) {
 
 
 NocSonicMixer.prototype.pauseSonicLoop = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "pauseSonicLoop", [this.id,  this._sonicSrc]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "pauseSonicLoop", [this.id,  this._sonicSrc]);
 };
 
 
@@ -252,7 +252,7 @@ NocSonicMixer.prototype.pauseSonicLoop = function() {
  * */
 
 NocSonicMedia.prototype.stopSonicLoop = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id], 0);
+  //exec(null, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id], 0);
 };
 
 
@@ -267,7 +267,7 @@ NocSonicMedia.prototype.stopSonicLoop = function() {
  * Seek or jump to a new time in the track..
  */
 NocSonicMixer.prototype.sonicLoopRewind = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
 };
 
  /**
@@ -280,7 +280,7 @@ NocSonicMixer.prototype.sonicLoopRewind = function() {
 
 
 NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
-    exec(null, null, "NocSonicMixer", "setSonicLoopVolume", [this.id, sonicLoopGain]);
+  //exec(null, null, "NocSonicMixer", "setSonicLoopVolume", [this.id, sonicLoopGain]);
 };
 
 
@@ -309,11 +309,11 @@ NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
 
 NocSonicMixer.prototype.getSonicLoopMeter = function(success, fail) {
     var me = this;
-    exec(function(sonicLoopMeter) {
+  /*exec(function(sonicLoopMeter) {
             me._sonicLoopMeter = sonicLoopMeter;
             success(sonicLoopMeter);
             },
-            fail, "NocSonicMedia", "getSonicLoopMeter", [this.id]);
+            fail, "NocSonicMedia", "getSonicLoopMeter", [this.id]);*/
 };
 
 
@@ -323,7 +323,7 @@ NocSonicMixer.prototype.getSonicLoopMeter = function(success, fail) {
  * if Neccessary
  */
 NocSonicMixer.prototype.sonicLoopRelease = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRelease", [this.id]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRelease", [this.id]);
 };
 
 
@@ -384,7 +384,7 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
 
 NocSonicMixer.prototype.startNocRecordingSession = function (options) {
     this._nocSrc = options.nocSrc;
-    exec(null, this.errorCallback, "NocSonicMixer", "startNocRecordingSession", [this.id, options]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "startNocRecordingSession", [this.id, options]);
 };
 
 
@@ -414,7 +414,7 @@ NocSonicMixer.prototype.startNocRecordingSession = function (options) {
 
 
 NocSonicMedia.prototype.stopNocRecordingSession = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
 };
 
 
@@ -428,7 +428,7 @@ NocSonicMedia.prototype.stopNocRecordingSession = function() {
  */
 
 NocSonicMixer.prototype.setInputAmplitude= function(inputAmplitude) {
-    exec(null, null, "NocSonicMixer", "setInputAmplitude", [this.id, inputAmplitude]);
+  //exec(null, null, "NocSonicMixer", "setInputAmplitude", [this.id, inputAmplitude]);
 };
 
 
@@ -454,11 +454,11 @@ NocSonicMixer.prototype.setInputAmplitude= function(inputAmplitude) {
 
 NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
     var me = this;
-    exec(function(vocalInputMeter) {
+  /*exec(function(vocalInputMeter) {
             me._vocalInputMeter = vocalInputMeter;
             success(vocalInputMeter);
             },
-            fail, "NocSonicMedia", "getVocalInputMeter", [this.id]);
+            fail, "NocSonicMedia", "getVocalInputMeter", [this.id]);*/
 };
 
 
@@ -482,7 +482,7 @@ NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
 
 NocSonicMixer.prototype.playTwoTracks = function() {
 
-    exec(null, null, "NocSonicMixer", "playTwoTracks", [this.id]);
+  //exec(null, null, "NocSonicMixer", "playTwoTracks", [this.id]);
 };
 
 
@@ -497,7 +497,7 @@ NocSonicMixer.prototype.playTwoTracks = function() {
 
 NocSonicMixer.prototype.pauseTwoTracks = function() {
 
-    exec(null, null, "NocSonicMixer", "pauseTwoTracks", [this.id]);
+  //exec(null, null, "NocSonicMixer", "pauseTwoTracks", [this.id]);
 };
 
 
@@ -511,7 +511,7 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
 
 NocSonicMixer.prototype.stopTwoTracks = function() {
 
-    exec(null, null, "NocSonicMixer", "stopTwoTracks", [this.id]);
+  //exec(null, null, "NocSonicMixer", "stopTwoTracks", [this.id]);
 };
 
 
@@ -523,7 +523,7 @@ NocSonicMixer.prototype.stopTwoTracks = function() {
 
 NocSonicMixer.prototype.rewindTwoTracks = function() {
 
-    exec(null, null, "NocSonicMixer", "rewindTwoTracks", [this.id]);
+  //exec(null, null, "NocSonicMixer", "rewindTwoTracks", [this.id]);
 };
 
 
@@ -542,7 +542,7 @@ NocSonicMixer.prototype.rewindTwoTracks = function() {
 
 NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
 
-    exec(null, null, "NocSonicMixer", "setSonicBufferTrackVolume", [this.id, sonicBufferGain]);
+  //exec(null, null, "NocSonicMixer", "setSonicBufferTrackVolume", [this.id, sonicBufferGain]);
 };
 
 
@@ -558,11 +558,11 @@ NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
 
 NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
     var me = this;
-    exec(function(sonicTrackMeter) {
+  /*exec(function(sonicTrackMeter) {
             me._sonicTrackMeter = sonicTrackMeter;
             success(sonicTrackMeter);
             },
-            fail, "NocSonicMedia", "getSonicTrackMeter", [this.id]);
+            fail, "NocSonicMedia", "getSonicTrackMeter", [this.id]);*/
 };
 
 
@@ -576,7 +576,7 @@ NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
 
 NocSonicMixer.prototype.setNocTrackVolume = function(nocBufferGain) {
 
-    exec(null, null, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
+  //exec(null, null, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
 };
 
 
@@ -591,11 +591,11 @@ NocSonicMixer.prototype.setNocTrackVolume = function(nocBufferGain) {
 
 NocSonicMixer.prototype.getNocTrackMeter = function(success, fail) {
     var me = this;
-    exec(function(nocTrackMeter ) {
+  /*exec(function(nocTrackMeter ) {
             me._nocTrackMeter = nocTrackMeter ;
             success(nocTrackMeter );
             },
-            fail, "NocSonicMedia", "getNocInputMeter", [this.id]);
+            fail, "NocSonicMedia", "getNocInputMeter", [this.id]);*/
 };
 
 
@@ -607,7 +607,7 @@ NocSonicMixer.prototype.getNocTrackMeter = function(success, fail) {
  */
 NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
 
-    exec(null, null, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
+  //exec(null, null, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
 };
 
 
@@ -620,7 +620,7 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
  */
 NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
 
-    exec(null, null, "NocSonicMixer", "deleteNocTrackBuffer", [this.id]);
+  //exec(null, null, "NocSonicMixer", "deleteNocTrackBuffer", [this.id]);
 };
 
 
@@ -644,7 +644,7 @@ NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
  */
 NocSonicMixer.prototype.createMasterMix = function() {
 
-    exec(null, null, "NocSonicMixer", "createMasterMix", [this.id]);
+  //exec(null, null, "NocSonicMixer", "createMasterMix", [this.id]);
 };
 
 
@@ -659,7 +659,7 @@ NocSonicMixer.prototype.createMasterMix = function() {
  */
 NocSonicMixer.prototype.playMasterMix = function() {
 
-    exec(null, null, "NocSonicMixer", "playMasterMix", [this.id]);
+  //exec(null, null, "NocSonicMixer", "playMasterMix", [this.id]);
 };
 
 
@@ -671,7 +671,7 @@ NocSonicMixer.prototype.playMasterMix = function() {
  */
 NocSonicMixer.prototype.stopMasterMix = function() {
 
-    exec(null, null, "NocSonicMixer", "stopMasterMix", [this.id]);
+  //exec(null, null, "NocSonicMixer", "stopMasterMix", [this.id]);
 };
 
 
@@ -687,7 +687,7 @@ NocSonicMixer.prototype.stopMasterMix = function() {
 
 NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
-    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
+  //exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
 };
 
 /**
@@ -701,11 +701,11 @@ NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
 NocSonicMixer.prototype.getMasterMixMeter = function(success, fail) {
     var me = this;
-    exec(function(masterMixMeter ) {
+  /*exec(function(masterMixMeter ) {
             me._masterMixMeter = masterMixMeter ;
             success(masterMixMeter );
             },
-            fail, "NocSonicMedia", "getMasterMixMeter", [this.id]);
+            fail, "NocSonicMedia", "getMasterMixMeter", [this.id]);*/
 };
 
 
@@ -721,7 +721,7 @@ NocSonicMixer.prototype.getMasterMixMeter = function(success, fail) {
 
 NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
-    exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
+  //exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
 };
 
 
@@ -730,11 +730,11 @@ NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
  */
 NocSonicMixer.prototype.getCurrentMasterMixPosition = function(success, fail) {
     var me = this;
-        exec(function(masterMixPosition) {
+      /*exec(function(masterMixPosition) {
             me._masterMixPosition = masterMixPosition;
             success(masterMixPosition);
         },
-        fail, "NocSonicMixer", "getCurrentMasterMixPosition", [this.id]);
+        fail, "NocSonicMixer", "getCurrentMasterMixPosition", [this.id]);*/
 };
 
 /**
@@ -759,7 +759,7 @@ NocSonicMixer.prototype.getCurrentMasterMixDuration= function() {
 
 NocSonicMixer.prototype.deleteMasterMix = function() {
 
-    exec(null, null, "NocSonicMixer", "deleteMasterMix", [this.id]);
+  //exec(null, null, "NocSonicMixer", "deleteMasterMix", [this.id]);
 };
 
 
@@ -780,7 +780,7 @@ NocSonicMixer.prototype.deleteMasterMix = function() {
 
 NocSonicMixer.prototype.promoteMasterToFile = function(fileName) {
 
-    exec(null, null, "NocSonicMixer", "promoteMasterMix", [this.id], fileName);
+  //exec(null, null, "NocSonicMixer", "promoteMasterMix", [this.id], fileName);
 };
 
 
@@ -794,7 +794,7 @@ NocSonicMixer.prototype.promoteMasterToFile = function(fileName) {
 
 NocSonicMixer.prototype.playPromotedFile = function() {
 
-    exec(null, null, "NocSonicMixer", "playPromotedFile", [this.id]);
+  //exec(null, null, "NocSonicMixer", "playPromotedFile", [this.id]);
 };
 
 
@@ -805,7 +805,7 @@ NocSonicMixer.prototype.playPromotedFile = function() {
 
 NocSonicMixer.prototype.pausePromotedFile = function() {
 
-    exec(null, null, "NocSonicMixer", "pausePromotedFile", [this.id]);
+  //exec(null, null, "NocSonicMixer", "pausePromotedFile", [this.id]);
 };
 
 
@@ -816,7 +816,7 @@ NocSonicMixer.prototype.pausePromotedFile = function() {
 
 NocSonicMixer.prototype.stopPromotedFile = function() {
 
-    exec(null, null, "NocSonicMixer", "stopPromotedFile", [this.id]);
+  //exec(null, null, "NocSonicMixer", "stopPromotedFile", [this.id]);
 };
 
 
@@ -839,11 +839,11 @@ NocSonicMixer.prototype.getPromotedFileDuration = function() {
 
 NocSonicMixer.prototype.getPromotedFilePosition = function(success, fail) {
     var me = this;
-        exec(function(promotedFilePosition) {
+      /*exec(function(promotedFilePosition) {
             me._promotedFilePosition = promotedFilePosition;
             success(promotedFilePosition);
         },
-        fail, "NocSonicMixer", "getPromotedFilePosition", [this.id]);
+        fail, "NocSonicMixer", "getPromotedFilePosition", [this.id]);*/
 };
 
  /**
@@ -854,9 +854,9 @@ NocSonicMixer.prototype.getPromotedFilePosition = function(success, fail) {
 NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
 
     var me = this;
-    exec(function(p) {
+  /*exec(function(p) {
         me._promotedFilePosition = p;
-    }, this.errorCallback,"NocSonicMixer", "promotedFileSseekTo", [this.id,milliseconds]);
+    }, this.errorCallback,"NocSonicMixer", "promotedFileSseekTo", [this.id,milliseconds]);*/
 };
 
 
@@ -869,7 +869,7 @@ NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
 
 NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
 
-    exec(null, null, "NocSonicMixer", "setPromotedFileVolume", [this.id, promotedFileGain]);
+  //exec(null, null, "NocSonicMixer", "setPromotedFileVolume", [this.id, promotedFileGain]);
 };
 
 
@@ -884,11 +884,11 @@ NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
  */
 NocSonicMixer.prototype.getPromotedFileMeter = function(success, fail) {
     var me = this;
-    exec(function(promotedFileMeter ) {
+  /*exec(function(promotedFileMeter ) {
             me._promotedFileMeter = promotedFileMeter ;
             success(promotedFileMeter );
             },
-            fail, "NocSonicMedia", "getPromotedFileMeter", [this.id]);
+            fail, "NocSonicMedia", "getPromotedFileMeter", [this.id]);*/
 };
 
 
@@ -907,7 +907,7 @@ NocSonicMixer.prototype.getPromotedFileLocation = function() {
  * Release the resources.
  */
 NocSonicMixer.prototype.releasePromotedFile = function() {
-    exec(null, this.errorCallback, "NocSonicMixer", "releasePromotedFile", [this.id]);
+  //exec(null, this.errorCallback, "NocSonicMixer", "releasePromotedFile", [this.id]);
 };
 
 
@@ -920,7 +920,7 @@ NocSonicMixer.prototype.releasePromotedFile = function() {
 
 NocSonicMixer.prototype.deletePromotedFile = function() {
 
-    exec(null, null, "NocSonicMixer", "deleteMasterFile", [this.id]);
+  //exec(null, null, "NocSonicMixer", "deleteMasterFile", [this.id]);
 };
 
 
@@ -1020,7 +1020,7 @@ if (cordova.platformId === 'android' || cordova.platformId === 'windowsphone') {
     channel.waitForInitialization('onNocSonicMixerPluginReady');
 
     channel.onCordovaReady.subscribe(function() {
-        exec(onMessageFromNative, undefined, 'NocSonicMixer', 'messageChannel', []);
+      //exec(onMessageFromNative, undefined, 'NocSonicMixer', 'messageChannel', []);
         channel.initializationComplete('onNocSonicMixerPluginReady');
     });
 }
