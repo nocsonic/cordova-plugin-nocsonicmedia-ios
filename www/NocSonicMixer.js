@@ -856,7 +856,7 @@ NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
     var me = this;
   /*exec(function(p) {
         me._promotedFilePosition = p;
-    }, this.errorCallback,"NocSonicMixer", "promotedFileSseekTo", [this.id,milliseconds]);*/
+    }, this.errorCallback,"NocSonicMixer", "promotedFileSeekTo", [this.id,milliseconds]);*/
 };
 
 
@@ -869,7 +869,7 @@ NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
 
 NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
 
-  //exec(null, null, "NocSonicMixer", "setPromotedFileVolume", [this.id, promotedFileGain]);
+  //exec(null, null, "NocSonicMixer", "", setPromotedFileVolume[this.id, promotedFileGain]);
 };
 
 

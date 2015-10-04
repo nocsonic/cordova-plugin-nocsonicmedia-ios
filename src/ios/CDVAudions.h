@@ -70,26 +70,67 @@ typedef NSUInteger CDVMediaMsg;
 @property (nonatomic, strong) NSMutableDictionary* soundCache;
 @property (nonatomic, strong) AVAudioSession* avSession;
 
-- (void)startPlayingAudio:(CDVInvokedUrlCommand*)command;
-- (void)pausePlayingAudio:(CDVInvokedUrlCommand*)command;
-- (void)stopPlayingAudio:(CDVInvokedUrlCommand*)command;
-- (void)seekToAudio:(CDVInvokedUrlCommand*)command;
-- (void)release:(CDVInvokedUrlCommand*)command;
-- (void)getCurrentPositionAudio:(CDVInvokedUrlCommand*)command;
+//rythym selector
+- (void)loadedSonicTrack:(CDVInvokedUrlCommand*)command;
+- (void)startPlayingSonicLoop:(CDVInvokedUrlCommand*)command;
+- (void)pauseSonicLoop:(CDVInvokedUrlCommand*)command;
+- (void)stopSonicLoop:(CDVInvokedUrlCommand*)command;
+- (void)sonicLoopRewind:(CDVInvokedUrlCommand*)command;
+- (void)setSonicLoopVolume:(CDVInvokedUrlCommand*)command;
+- (void)getSonicLoopMeter:(CDVInvokedUrlCommand*)command;
+- (void)sonicLoopRelease:(CDVInvokedUrlCommand*)command;
 
-- (BOOL)hasAudioSession;
+//Recording Session View
+- (void)startNocRecordingSession:(CDVInvokedUrlCommand*)command;
+- (void)stopNocRecordingSession:(CDVInvokedUrlCommand*)command;
+- (void)setInputAmplitude:(CDVInvokedUrlCommand*)command;
+- (void)getVocalInputMeter:(CDVInvokedUrlCommand*)command;
+
+// Two Track Mixing Session
+- (void)playTwoTracks:(CDVInvokedUrlCommand*)command;
+- (void)pauseTwoTracks:(CDVInvokedUrlCommand*)command;
+- (void)stopTwoTracks:(CDVInvokedUrlCommand*)command;
+- (void)rewindTwoTracks:(CDVInvokedUrlCommand*)command;
+- (void)setSonicBufferTrackVolume:(CDVInvokedUrlCommand*)command;
+- (void)getSonicTrackMeter:(CDVInvokedUrlCommand*)command;
+- (void)setNocTrackVolume:(CDVInvokedUrlCommand*)command;
+- (void)getNocTrackMeter:(CDVInvokedUrlCommand*)command;
+- (void)deleteSonicTrackBuffer:(CDVInvokedUrlCommand*)command;
+- (void)deleteNocTrackBuffer:(CDVInvokedUrlCommand*)command;
+
+// Master Creation Session
+- (void)createMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)playMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)stopMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
+- (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command;
+- (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
+- (void)getCurrentMasterMixPosition:(CDVInvokedUrlCommand*)command;
+- (void)deleteMasterMix:(CDVInvokedUrlCommand*)command;
+
+//  Master Promotion Session
+- (void)promoteMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)playPromotedFile:(CDVInvokedUrlCommand*)command;
+- (void)pausePromotedFile:(CDVInvokedUrlCommand*)command;
+- (void)stopPromotedFile:(CDVInvokedUrlCommand*)command;
+- (void)getPromotedFilePosition:(CDVInvokedUrlCommand*)command;
+- (void)promotedFileSeekTo:(CDVInvokedUrlCommand*)command;
+- (void)setPromotedFileVolume:(CDVInvokedUrlCommand*)command;
+- (void)getPromotedFileMeter:(CDVInvokedUrlCommand*)command;
+- (void)releasePromotedFile:(CDVInvokedUrlCommand*)command;
+- (void)deleteMasterFile:(CDVInvokedUrlCommand*)command;
+
+
+// Two Track Mixing Session
+- (BOOL)hasNocAudioSession;
 
 // helper methods
-- (NSURL*)urlForRecording:(NSString*)resourcePath;
-- (NSURL*)urlForPlaying:(NSString*)resourcePath;
+- (NSURL*)urlForNocRecording:(NSString*)resourcePath;
+- (NSURL*)urlForNocPlaying:(NSString*)resourcePath;
 
-- (CDVAudioFile*)audioFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord;
-- (BOOL)prepareToPlay:(CDVAudioFile*)audioFile withId:(NSString*)mediaId;
-- (NSString*)createMediaErrorWithCode:(CDVMediaError)code message:(NSString*)message;
+- (CDVAudioFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord;
+- (BOOL)prepareToPlayNoc:(CDVAudioFile*)audioFile withId:(NSString*)mediaId;
+- (NSString*)createNocSonicMixErrorWithCode:(CDVMediaError)code message:(NSString*)message;
 
-- (void)startRecordingAudio:(CDVInvokedUrlCommand*)command;
-- (void)stopRecordingAudio:(CDVInvokedUrlCommand*)command;
-
-- (void)setVolume:(CDVInvokedUrlCommand*)command;
 
 @end
