@@ -39,18 +39,12 @@ typedef NSUInteger CDVMediaMsg;
 
 @interface CDVAudioRecorder : AVAudioRecorder
 {
-    NSString* mediaId;
 }
 @property (nonatomic, copy) NSString* mediaId;
 @end
 
 @interface CDVAudioFile : NSObject
 {
-    NSString* resourcePath;
-    NSURL* resourceURL;
-    CDVAudioPlayer* player;
-    CDVAudioRecorder* recorder;
-    NSNumber* volume;
 }
 
 @property (nonatomic, strong) NSString* resourcePath;
@@ -64,8 +58,6 @@ typedef NSUInteger CDVMediaMsg;
 
 @interface CDVAudions : CDVPlugin <AVAudioPlayerDelegate, AVAudioRecorderDelegate>
 {
-    NSMutableDictionary* soundCache;
-    AVAudioSession* avSession;
 }
 @property (nonatomic, strong) NSMutableDictionary* soundCache;
 @property (nonatomic, strong) AVAudioSession* avSession;
