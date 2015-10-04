@@ -30,29 +30,29 @@ enum CDVMediaMsg {
 };
 typedef NSUInteger CDVMediaMsg;
 
-@interface CDVAudioPlayer : AVAudioPlayer
+@interface CDVAudioMixerPlayer : AVAudioPlayer
 {
     NSString* mediaId;
 }
 @property (nonatomic, copy) NSString* mediaId;
 @end
 
-@interface CDVAudioRecorder : AVAudioRecorder
+@interface CDVAudioMixerRecorder : AVAudioRecorder
 {
 }
 @property (nonatomic, copy) NSString* mediaId;
 @end
 
-@interface CDVAudioFile : NSObject
+@interface CDVAudioMixerFile : NSObject
 {
 }
 
 @property (nonatomic, strong) NSString* resourcePath;
 @property (nonatomic, strong) NSURL* resourceURL;
-@property (nonatomic, strong) CDVAudioPlayer* player;
+@property (nonatomic, strong) CDVAudioMixerPlayer* player;
 @property (nonatomic, strong) NSNumber* volume;
 
-@property (nonatomic, strong) CDVAudioRecorder* recorder;
+@property (nonatomic, strong) CDVAudioMixerRecorder* recorder;
 
 @end
 
@@ -119,8 +119,8 @@ typedef NSUInteger CDVMediaMsg;
 - (NSURL*)urlForNocRecording:(NSString*)resourcePath;
 - (NSURL*)urlForNocPlaying:(NSString*)resourcePath;
 
-- (CDVAudioFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord;
-- (BOOL)prepareToPlayNoc:(CDVAudioFile*)audioFile withId:(NSString*)mediaId;
+- (CDVAudioMixerFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord;
+- (BOOL)prepareToPlayNoc:(CDVAudioMixerFile*)audioFile withId:(NSString*)mediaId;
 - (NSString*)createNocSonicMixErrorWithCode:(CDVMediaError)code message:(NSString*)message;
 
 

@@ -29,9 +29,9 @@
 }
 
 // Creates or gets the cached audio file resource object
-- (CDVAudioFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord
+- (CDVAudioMixerFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord
 {
-    CDVAudioFile* audioFile = nil;
+    CDVAudioMixerFile* audioFile = nil;
     return audioFile;
 }
 
@@ -61,7 +61,7 @@
 {
 }
 
-- (BOOL)prepareToPlayNoc:(CDVAudioFile*)audioFile withId:(NSString*)mediaId
+- (BOOL)prepareToPlayNoc:(CDVAudioMixerFile*)audioFile withId:(NSString*)mediaId
 {
     BOOL bError = NO;
     return bError;
@@ -234,7 +234,7 @@
 
 @end
 
-@implementation CDVAudioFile
+@implementation CDVAudioMixerFile
 
 @synthesize resourcePath;
 @synthesize resourceURL;
@@ -242,12 +242,12 @@
 @synthesize recorder;
 
 @end
-@implementation CDVAudioPlayer
+@implementation CDVAudioMixerPlayer
 @synthesize mediaId;
 
 @end
 
-@implementation CDVAudioRecorder
+@implementation CDVAudioMixerRecorder
 @synthesize mediaId;
 
 @end
