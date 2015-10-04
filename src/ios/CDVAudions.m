@@ -44,8 +44,9 @@
 
 // helper function to create a error object string
 - (NSString*)createNocSonicMixErrorWithCode:(CDVMediaError)code message:(NSString*)message
-{
-  return;
+    NSString* someValue = nil;
+
+  return someValue;
 }
 
 - (void)create:(CDVInvokedUrlCommand*)command
