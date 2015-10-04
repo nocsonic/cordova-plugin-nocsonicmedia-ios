@@ -15,7 +15,7 @@
 // Maps a url for a resource path for recording
 - (NSURL*)urlForNocRecording:(NSString*)resourcePath
 {
-    NSURL* resourceURL = nil; resourceURL = [NSURL fileURLWithPath:filePath];
+    NSURL* resourceURL = nil;
     return resourceURL;
 }
 
@@ -174,10 +174,6 @@
 }
 
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command
-{
-}
-
-- (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command
 {
 }
 

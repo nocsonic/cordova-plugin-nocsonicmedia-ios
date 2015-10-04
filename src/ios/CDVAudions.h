@@ -96,7 +96,6 @@ typedef NSUInteger CDVMediaMsg;
 - (void)stopMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command;
-- (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
 - (void)getCurrentMasterMixPosition:(CDVInvokedUrlCommand*)command;
 - (void)deleteMasterMix:(CDVInvokedUrlCommand*)command;
 
