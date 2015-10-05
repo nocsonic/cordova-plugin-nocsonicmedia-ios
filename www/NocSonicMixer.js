@@ -153,10 +153,6 @@ NocSonicMixer.MEDIA_MSG = ["None",
 
 
 
-
-
-
-
 // "static" function to return existing objs.
 NocSonicMixer.get = function(id) {
     return nocMixObject[id];
@@ -203,7 +199,8 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
     }
     this._sonicSrc        =  sonicSrc;
     this._sonicLoopMeter =  {left:-1, right:-1};
-  //exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadedSonicTrack", [this.id, this._sonicSrc]);
+    console.log('[NocSonicMixer.prototype.loadSonic ---- sonicSrc ='+sonicSrc);
+    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "loadedSonicTrack", [this.id, this._sonicSrc]);
 };
 
 

@@ -5,30 +5,58 @@
 
 #import <Cordova/CDVPlugin.h>
 
-enum CDVMediaError {
+enum CDVNocSonicMixerError {
     MEDIA_ERR_ABORTED = 1,
     MEDIA_ERR_NETWORK = 2,
     MEDIA_ERR_DECODE = 3,
     MEDIA_ERR_NONE_SUPPORTED = 4
 };
-typedef NSUInteger CDVMediaError;
+typedef NSUInteger CDVNocSonicMixerError;
 
-enum CDVMediaStates {
-    MEDIA_NONE = 0,
-    MEDIA_STARTING = 1,
-    MEDIA_RUNNING = 2,
-    MEDIA_PAUSED = 3,
-    MEDIA_STOPPED = 4
+enum CDVNocSonicMixerStates {
+    NSMIXER_NONE = 0,
+    NSMIXER_SONICLOOP_LOADED = 1,
+    NSMIXER_SONICLOOP_PLAYING = 2,
+    NSMIXER_SONICLOOP_PAUSED = 3,
+    NSMIXER_SONICLOOP_STOPPED = 4,
+    NSMIXER_RECORDSESSION_READY = 5,
+    NSMIXER_RECORDSESSION_STARTED = 6,
+    NSMIXER_RECORDSESSION_IN_PROGESS = 7,
+    NSMIXER_RECORDSESSION_STOPPED = 8,
+    NSMIXER_MIXINGSESSION_READY = 9
+    NSMIXER_MIXINGSESSION_PLAYING = 10,
+    NSMIXER_MIXINGSESSION_PAUSED = 11,
+    NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS = 12,
+    NSMIXER_MIXINGSESSION_STOPPED = 13,
+    NSMIXER_MASTERMIX_MERGING = 14,
+    NSMIXER_MASTERMIX_MERGED = 15,
+    NSMIXER_MASTERMIX_PLAYING = 16,
+    NSMIXER_MASTERMIX_PAUSED = 17,
+    NSMIXER_MASTERMIX_STOPPED = 18,
+    NSMIXER_PROMOTEDFILE_CREATED = 19,
+    NSMIXER_PROMOTEDFILE_PLAYING = 20,
+    NSMIXER_PROMOTEDFILE_PAUSED =21,
+    NSMIXER_PROMOTEDFILE_STOPPED = 22
 };
-typedef NSUInteger CDVMediaStates;
 
-enum CDVMediaMsg {
-    MEDIA_STATE = 1,
-    MEDIA_DURATION = 2,
-    MEDIA_POSITION = 3,
-    MEDIA_ERROR = 9
+typedef NSUInteger CDVNocSonicMixerStates;
+
+enum CDVNocSonicMixeMsg {
+    NSMIXER_STATE = 1,
+    NSMIXER_SONICLOOP_VU_METER= 2;
+    NSMIXER_VOCALINPUT_VU_METER = 3;
+    NSMIXER_NOCTRACK_VU_METER = 4;
+    NSMIXER_SONICTRACK_VU_METER = 5;
+    NSMIXER_MASTERMIX_VU_METER = 6;
+    NSMIXER_MASTERMIX_POSITION = 7;
+    NSMIXER_MASTERMIX_DURATION = 8;
+    NSMIXER_PROMOTEDFILE_VU_METER = 9;
+    NSMIXER_PROMOTEDFILE_DURATION = 10;
+    NSMIXER_PROMOTEDFILE_POSITION = 11;
+    NSMIXER_PROMOTEDFILE_PATH = 12;
 };
-typedef NSUInteger CDVMediaMsg;
+
+typedef NSUInteger CDVNocSonicMixeMsg;
 
 @interface CDVAudioMixerPlayer : AVAudioPlayer
 {
@@ -121,7 +149,7 @@ typedef NSUInteger CDVMediaMsg;
 
 - (CDVAudioMixerFile*)audioNocFileForResource:(NSString*)resourcePath withId:(NSString*)mediaId doValidation:(BOOL)bValidate forRecording:(BOOL)bRecord;
 - (BOOL)prepareToPlayNoc:(CDVAudioMixerFile*)audioFile withId:(NSString*)mediaId;
-- (NSString*)createNocSonicMixErrorWithCode:(CDVMediaError)code message:(NSString*)message;
+- (NSString*)createNocSonicMixErrorWithCode:(CDVNocSonicMixerError)code message:(NSString*)message;
 
 
 @end

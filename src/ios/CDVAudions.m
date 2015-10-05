@@ -54,7 +54,14 @@
 }
 
 - (void)loadedSonicTrack:(CDVInvokedUrlCommand*)command
-{
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId = [command argumentAtIndex:0];
+    BOOL loadedState = YES;
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK ];
+
+    NSString* jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%.3f);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_SONICLOOP_LOADED, loadedState];
+    [self.commandDelegate evalJs:jsString];
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 - (void)startPlayingSonicLoop:(CDVInvokedUrlCommand*)command
