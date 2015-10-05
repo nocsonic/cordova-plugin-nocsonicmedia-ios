@@ -39,12 +39,7 @@ var nocMixObject = { };
  * */
 
 var NocSonicMixer = function(successCallback, errorCallback, statusCallback){
-     for(var prop in ad) {
-        if (nocMixObject.hasOwnProperty(prop)) {
-            //check for listeners before destroying
-            delete nocMixObject[prop];
-        }
-     }
+   // should check to delete if one is already created
      this.id = utils.createUUID();
      nocMixObject[this.id]       =  this;
      this._sonicSrc              =  '';
