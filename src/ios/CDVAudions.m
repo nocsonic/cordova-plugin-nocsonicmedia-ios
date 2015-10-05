@@ -43,7 +43,7 @@
 }
 
 // helper function to create a error object string
-- (NSString*)createNocSonicMixErrorWithCode:(CDVMediaError)code message:(NSString*)message
+- (NSString*)createNocSonicMixErrorWithCode:(CDVNocSonicMixerError)code message:(NSString*)message
 {
     NSString* someValue = nil;
     return someValue;
