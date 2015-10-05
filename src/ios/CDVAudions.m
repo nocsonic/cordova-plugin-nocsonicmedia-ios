@@ -54,6 +54,7 @@
 }
 
 - (void)loadedSonicTrack:(CDVInvokedUrlCommand*)command
+{
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     BOOL loadedState     = YES;
