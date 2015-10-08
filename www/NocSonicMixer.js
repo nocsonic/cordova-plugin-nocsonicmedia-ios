@@ -213,7 +213,7 @@ NocSonicMixer.prototype.loadSonic = function(sonicSrc) {
  */
 
 NocSonicMixer.prototype.playSonicLoop = function(options) {
-  //exec(null, null, "NocSonicMixer", "startPlayingSonicLoop", [this.id, this._sonicSrc, options]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "startPlayingSonicLoop", [this.id, this._sonicSrc, options]);
 };
 
 
@@ -225,7 +225,7 @@ NocSonicMixer.prototype.playSonicLoop = function(options) {
 
 
 NocSonicMixer.prototype.pauseSonicLoop = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "pauseSonicLoop", [this.id,  this._sonicSrc]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "pauseSonicLoop", [this.id,  this._sonicSrc]);
 };
 
 
@@ -244,7 +244,7 @@ NocSonicMixer.prototype.pauseSonicLoop = function() {
  * */
 
 NocSonicMixer.prototype.stopSonicLoop = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id], 0);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "stopSonicLoop", [this.id], 0);
 };
 
 
@@ -259,7 +259,7 @@ NocSonicMixer.prototype.stopSonicLoop = function() {
  * Seek or jump to a new time in the track..
  */
 NocSonicMixer.prototype.sonicLoopRewind = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "sonicLoopRewind", [this.id, 0]);
 };
 
  /**
@@ -272,7 +272,7 @@ NocSonicMixer.prototype.sonicLoopRewind = function() {
 
 
 NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
-  //exec(null, null, "NocSonicMixer", "setSonicLoopVolume", [this.id, sonicLoopGain]);
+    exec(this.successCallback, this.errorCallback, "setSonicLoopVolume", [this.id, sonicLoopGain]);
 };
 
 
@@ -301,11 +301,11 @@ NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
 
 NocSonicMixer.prototype.getSonicLoopMeter = function(success, fail) {
     var me = this;
-  /*exec(function(sonicLoopMeter) {
+  exec(function(sonicLoopMeter) {
             me._sonicLoopMeter = sonicLoopMeter;
             success(sonicLoopMeter);
             },
-            fail, "NocSonicMixer", "getSonicLoopMeter", [this.id]);*/
+            fail, "NocSonicMixer", "getSonicLoopMeter", [this.id]);
 };
 
 
@@ -315,7 +315,7 @@ NocSonicMixer.prototype.getSonicLoopMeter = function(success, fail) {
  * if Neccessary
  */
 NocSonicMixer.prototype.sonicLoopRelease = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "sonicLoopRelease", [this.id]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "sonicLoopRelease", [this.id]);
 };
 
 
@@ -376,7 +376,7 @@ NocSonicMixer.prototype.sonicLoopRelease = function() {
 
 NocSonicMixer.prototype.startNocRecordingSession = function (options) {
     this._nocSrc = options.nocSrc;
-  //exec(null, this.errorCallback, "NocSonicMixer", "startNocRecordingSession", [this.id, options]);
+   exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "startNocRecordingSession", [this.id, options]);
 };
 
 
@@ -406,7 +406,7 @@ NocSonicMixer.prototype.startNocRecordingSession = function (options) {
 
 
 NocSonicMixer.prototype.stopNocRecordingSession = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "stopNocRecordingSession", [this.id]);
+   exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "stopNocRecordingSession", [this.id]);
 };
 
 
@@ -420,7 +420,7 @@ NocSonicMixer.prototype.stopNocRecordingSession = function() {
  */
 
 NocSonicMixer.prototype.setInputAmplitude= function(inputAmplitude) {
-  //exec(null, null, "NocSonicMixer", "setInputAmplitude", [this.id, inputAmplitude]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setInputAmplitude", [this.id, inputAmplitude]);
 };
 
 
@@ -473,8 +473,7 @@ NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
  */
 
 NocSonicMixer.prototype.playTwoTracks = function() {
-
-  //exec(null, null, "NocSonicMixer", "playTwoTracks", [this.id]);
+ exec(this.successCallback, this.errorCallback,  "playTwoTracks", [this.id]);
 };
 
 
@@ -489,7 +488,7 @@ NocSonicMixer.prototype.playTwoTracks = function() {
 
 NocSonicMixer.prototype.pauseTwoTracks = function() {
 
-  //exec(null, null, "NocSonicMixer", "pauseTwoTracks", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "pauseTwoTracks", [this.id]);
 };
 
 
@@ -503,7 +502,7 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
 
 NocSonicMixer.prototype.stopTwoTracks = function() {
 
-  //exec(null, null, "NocSonicMixer", "stopTwoTracks", [this.id]);
+ exec(this.successCallback, this.errorCallback,  "stopTwoTracks", [this.id]);
 };
 
 
