@@ -80,52 +80,63 @@ NocSonicMixer.NSMIXER_PROMOTEDFILE_PATH = 12;
 NocSonicMixer.NSMIXER_ERROR = 99;
 
 // NocSonicMixer states
-NocSonicMixer.NSMIXER_NONE = 0;
-NocSonicMixer.NSMIXER_SONICLOOP_LOADED = 1;
-NocSonicMixer.NSMIXER_SONICLOOP_PLAYING = 2;
-NocSonicMixer.NSMIXER_SONICLOOP_PAUSED = 3;
-NocSonicMixer.NSMIXER_SONICLOOP_STOPPED = 4;
-
-NocSonicMixer.NSMIXER_RECORDSESSION_READY = 5;
-NocSonicMixer.NSMIXER_RECORDSESSION_STARTED = 6;
-NocSonicMixer.NSMIXER_RECORDSESSION_IN_PROGESS = 7;
-NocSonicMixer.NSMIXER_RECORDSESSION_STOPPED = 8;
-
-NocSonicMixer.NSMIXER_MIXINGSESSION_READY = 9;
-NocSonicMixer.NSMIXER_MIXINGSESSION_PLAYING = 10;
-NocSonicMixer.NSMIXER_MIXINGSESSION_PAUSED  = 11;
-NocSonicMixer.NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS = 12;
-NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED = 13;
-
-
-NocSonicMixer.NSMIXER_MASTERMIX_MERGING = 14;
-NocSonicMixer.NSMIXER_MASTERMIX_MERGED  = 15;
-NocSonicMixer.NSMIXER_MASTERMIX_PLAYING = 16;
-NocSonicMixer.NSMIXER_MASTERMIX_PAUSED  = 17;
-NocSonicMixer.NSMIXER_MASTERMIX_STOPPED = 18;
-
-
-
-NocSonicMixer.NSMIXER_PROMOTEDFILE_CREATED = 19;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING = 20;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED  = 21;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED = 22;
+NocSonicMixer.NSMIXER_NONE                            = 0;
+NocSonicMixer.NSMIXER_SONICLOOP_LOADED                = 1;
+NocSonicMixer.NSMIXER_SONICLOOP_PLAYING               = 2;
+NocSonicMixer.NSMIXER_SONICLOOP_PAUSED                = 3;
+NocSonicMixer.NSMIXER_SONICLOOP_STOPPED               = 4;
+NocSonicMixer.NSMIXER_SONICLOOP_REWIND                = 5;
+NocSonicMixer.NSMIXER_SONICLOOP_VOLUME                = 6;
+NocSonicMixer.NSMIXER_SONICLOOP_RELEASE               = 7;
+NocSonicMixer.NSMIXER_RECORDSESSION_READY             = 8;
+NocSonicMixer.NSMIXER_RECORDSESSION_STARTED           = 9;
+NocSonicMixer.NSMIXER_RECORDSESSION_IN_PROGESS        = 10;
+NocSonicMixer.NSMIXER_RECORDSESSION_STOPPED           = 11;
+NocSonicMixer.NSMIXER_RECORDSESSION_INPUTVOLUME       = 12;
+NocSonicMixer.NSMIXER_MIXINGSESSION_READY             = 13;
+NocSonicMixer.NSMIXER_MIXINGSESSION_PLAYING           = 14;
+NocSonicMixer.NSMIXER_MIXINGSESSION_PAUSED            = 15;
+NocSonicMixer.NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS  = 16;
+NocSonicMixer.NSMIXER_MIXINGSESSION_REWIND            = 17;
+NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED           = 18;
+NocSonicMixer.NSMIXER_MIXINGSESSION_SONICVOLUME       = 19;
+NocSonicMixer.NSMIXER_MIXINGSESSION_NOCVOLUME         = 20;
+NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYSONIC      = 21;
+NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 22;
+NocSonicMixer.NSMIXER_MASTERMIX_MERGING               = 23;
+NocSonicMixer.NSMIXER_MASTERMIX_MERGED                = 24;
+NocSonicMixer.NSMIXER_MASTERMIX_PLAYING               = 25;
+NocSonicMixer.NSMIXER_MASTERMIX_PAUSED                = 26;
+NocSonicMixer.NSMIXER_MASTERMIX_STOPPED               = 27;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_CREATED            = 28;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING            = 29;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED             = 30;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED            = 31;
 
 
 NocSonicMixer.MEDIA_MSG = ["None",
                            "SonicLoopLoaded",
                            "SonicLoopPlaying",
-                           "SonicLoopLoadedPaused",
-                           "SonicLoopLoadedStopped",
+                           "SonicLoopPaused",
+                           "SonicLoopStopped",
+                           "SonicLoopRewind",
+                           "SonicLoopVolume",
+                           "SonicLoopRelease",
                            "RecordingSessionReady",
                            "RecordingSessionStarted",
                            "RecordingSessionInProgress",
                            "RecordingSessionStopped",
+                           "RecordingSessionInputVolume",
                            "MixingSessionReady",
                            "MixingSessionPlaying",
                            "MixingSessionPaused",
                            "MixingSessionEditInProgress",
+                           "MixingSessionRewind",
                            "MixingSessionStopped",
+                           "MixingSessionSonicVolumeChange",
+                           "MixingSessionNocVolumeChange",
+                           "MixingSessionDestroySonic",
+                           "MixingSessionDestroyNoc",
                            "MasterMixMerging",
                            "MasterMixMerged",
                            "MasterMixPlaying",
