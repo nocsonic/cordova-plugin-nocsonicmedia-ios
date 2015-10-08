@@ -65,6 +65,12 @@
 
 - (void)startPlayingSonicLoop:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    BOOL loadedState     = YES;
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_SONICLOOP_PLAYING];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (BOOL)prepareToPlayNoc:(CDVAudioMixerFile*)audioFile withId:(NSString*)mediaId
@@ -75,11 +81,23 @@
 
 - (void)stopSonicLoop:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    BOOL loadedState     = YES;
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_SONICLOOP_STOPPED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 
 - (void)pauseSonicLoop:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    BOOL loadedState     = YES;
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_SONICLOOP_PAUSED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)sonicLoopRewind:(CDVInvokedUrlCommand*)command
