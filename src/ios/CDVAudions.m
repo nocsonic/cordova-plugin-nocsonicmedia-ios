@@ -105,7 +105,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     BOOL loadedState     = YES;
-    NSString* rwString   = @"rewind";
+    NSString* rwString   = @"sonicLoopRewind-invoked";
     NSString* jsString   = nil;
     jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, rwString];
     [self.commandDelegate evalJs:jsString];
@@ -116,7 +116,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     BOOL loadedState     = YES;
-    NSString* volString   = @"volume";
+    NSString* volString   = @"setSonicLoopVolume-Change";
     NSString* jsString   = nil;
     jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE,volString];
     [self.commandDelegate evalJs:jsString];
@@ -128,6 +128,13 @@
 
 - (void)sonicLoopRelease:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    BOOL loadedState     = YES;
+    NSString* release   = @"sonicLoopRelease-invoked";
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE,release];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)startRecordingAudio:(CDVInvokedUrlCommand*)command

@@ -155,9 +155,6 @@ NocSonicMixer.get = function(id) {
 
 
 
-ss
-
-
 /**
  *     Rhythym Selection  Session
  *
@@ -272,7 +269,7 @@ NocSonicMixer.prototype.sonicLoopRewind = function() {
 
 
 NocSonicMixer.prototype.setSonicLoopVolume = function(sonicLoopGain) {
-    exec(this.successCallback, this.errorCallback, "setSonicLoopVolume", [this.id, sonicLoopGain]);
+    exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "setSonicLoopVolume", [this.id, sonicLoopGain]);
 };
 
 
@@ -473,7 +470,7 @@ NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
  */
 
 NocSonicMixer.prototype.playTwoTracks = function() {
- exec(this.successCallback, this.errorCallback,  "playTwoTracks", [this.id]);
+ exec(this.successCallback, this.errorCallback, "NocSonicMixer",  "playTwoTracks", [this.id]);
 };
 
 
@@ -502,7 +499,7 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
 
 NocSonicMixer.prototype.stopTwoTracks = function() {
 
- exec(this.successCallback, this.errorCallback,  "stopTwoTracks", [this.id]);
+ exec(this.successCallback, this.errorCallback, "NocSonicMixer",  "stopTwoTracks", [this.id]);
 };
 
 
@@ -514,7 +511,7 @@ NocSonicMixer.prototype.stopTwoTracks = function() {
 
 NocSonicMixer.prototype.rewindTwoTracks = function() {
 
-  //exec(null, null, "NocSonicMixer", "rewindTwoTracks", [this.id]);
+ exec(this.successCallback, this.errorCallback, "NocSonicMixer", "rewindTwoTracks", [this.id]);
 };
 
 
@@ -533,7 +530,7 @@ NocSonicMixer.prototype.rewindTwoTracks = function() {
 
 NocSonicMixer.prototype.setSonicBufferTrackVolume = function(sonicBufferGain) {
 
-  //exec(null, null, "NocSonicMixer", "setSonicBufferTrackVolume", [this.id, sonicBufferGain]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setSonicBufferTrackVolume", [this.id, sonicBufferGain]);
 };
 
 
@@ -567,7 +564,7 @@ NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
 
 NocSonicMixer.prototype.setNocTrackVolume = function(nocBufferGain) {
 
-  //exec(null, null, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
 };
 
 
@@ -598,7 +595,7 @@ NocSonicMixer.prototype.getNocTrackMeter = function(success, fail) {
  */
 NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
 
-  //exec(null, null, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
 };
 
 
@@ -611,7 +608,7 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
  */
 NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
 
-  //exec(null, null, "NocSonicMixer", "deleteNocTrackBuffer", [this.id]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer","deleteNocTrackBuffer", [this.id]);
 };
 
 
