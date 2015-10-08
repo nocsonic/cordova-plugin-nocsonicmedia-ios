@@ -941,7 +941,8 @@ NocSonicMixer.onStatus = function(id, msgType, value) {
     if(nsMixer) {
         switch(msgType) {
             case NocSonicMixer.NSMIXER_STATE :
-                nsMixer.statusCallback && nsMixer.statusCallback(NocSonicMixer.MEDIA_MSG[value]);
+                var rtrnValue =   ((typeof value === "number") && Math.floor(value) === value)?NocSonicMixer.MEDIA_MSG[value]:value;
+                nsMixer.statusCallback && nsMixer.statusCallback(rtrnValue);
                 break;
             case NocSonicMixer.NSMIXER_ERROR :
                 nsMixer.errorCallback && nsMixer.errorCallback(value);
