@@ -112,6 +112,7 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 
 //Recording Session View
 - (void)startNocRecordingSession:(CDVInvokedUrlCommand*)command;
+- (void)startRecordingAudio:(CDVInvokedUrlCommand*)command;
 - (void)stopNocRecordingSession:(CDVInvokedUrlCommand*)command;
 - (void)setInputAmplitude:(CDVInvokedUrlCommand*)command;
 - (void)getVocalInputMeter:(CDVInvokedUrlCommand*)command;
