@@ -388,6 +388,17 @@ NocSonicMixer.prototype.startNocRecordingSession = function (options) {
 };
 
 
+
+/**
+*       Start clock
+*
+*/
+
+
+NocSonicMixer.prototype.startRecordingAudio = function (){
+   exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "startRecordingAudio", [this.id]);
+}
+
 /**
  *      NOTES: Just as would happen if the default 31 seconds elapsed, device stops capturing all audio from device
  *             inputs, and stops writing to the Vocal Track Buffer and Sonic Track Buffer, release any allocated memory
