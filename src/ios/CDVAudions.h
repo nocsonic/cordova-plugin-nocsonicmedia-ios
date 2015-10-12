@@ -22,30 +22,45 @@ enum CDVNocSonicMixerStates {
     NSMIXER_SONICLOOP_REWIND                = 5,
     NSMIXER_SONICLOOP_VOLUME                = 6,
     NSMIXER_SONICLOOP_RELEASE               = 7,
+
     NSMIXER_RECORDSESSION_READY             = 8,
     NSMIXER_RECORDSESSION_STARTED           = 9,
     NSMIXER_RECORDSESSION_IN_PROGESS        = 10,
     NSMIXER_RECORDSESSION_STOPPED           = 11,
     NSMIXER_RECORDSESSION_INPUTVOLUME       = 12,
+
     NSMIXER_MIXINGSESSION_READY             = 13,
     NSMIXER_MIXINGSESSION_PLAYING           = 14,
     NSMIXER_MIXINGSESSION_PAUSED            = 15,
-    NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS  = 16,
+    NSMIXER_MIXINGSESSION_STOPPED           = 16,
     NSMIXER_MIXINGSESSION_REWIND            = 17,
-    NSMIXER_MIXINGSESSION_STOPPED           = 18,
-    NSMIXER_MIXINGSESSION_SONICVOLUME       = 19,
-    NSMIXER_MIXINGSESSION_NOCVOLUME         = 20,
+    NSMIXER_MIXINGSESSION_SONICVOLUME       = 18,
+    NSMIXER_MIXINGSESSION_NOCVOLUME         = 19,
     NSMIXER_MIXINGSESSION_DESTROYSONIC      = 21,
-    NSMIXER_MIXINGSESSION_DESTROYNOC        = 22,
-    NSMIXER_MASTERMIX_MERGING               = 23,
-    NSMIXER_MASTERMIX_MERGED                = 24,
-    NSMIXER_MASTERMIX_PLAYING               = 25,
-    NSMIXER_MASTERMIX_PAUSED                = 26,
-    NSMIXER_MASTERMIX_STOPPED               = 27,
-    NSMIXER_PROMOTEDFILE_CREATED            = 28,
-    NSMIXER_PROMOTEDFILE_PLAYING            = 29,
-    NSMIXER_PROMOTEDFILE_PAUSED             = 30,
-    NSMIXER_PROMOTEDFILE_STOPPED            = 31
+    NSMIXER_MIXINGSESSION_RELEASESONIC      = 22,
+    NSMIXER_MIXINGSESSION_DESTROYNOC        = 23,
+    NSMIXER_MIXINGSESSION_RELEASENOC        = 24,
+    NSMIXER_MIXINGSESSION_REMOVEDITS        = 25,
+    NSMIXER_MIXINGSESSION_MERGE             = 26,
+
+    NSMIXER_MASTERMIX_READY                = 27
+    NSMIXER_MASTERMIX_PLAYING               = 28,
+    NSMIXER_MASTERMIX_PAUSED                = 29,
+    NSMIXER_MASTERMIX_STOPPED               = 30,
+    NSMIXER_MASTERMIX_DELETE                = 31,
+    NSMIXER_MASTERMIX_VOLUME                = 32,
+    NSMIXER_MASTERMIX_POSITION              = 33,
+    NSMIXER_MASTERMIX_RELEASE               = 34,
+    NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 35,
+
+    NSMIXER_PROMOTEDFILE_READY              = 36,
+    NSMIXER_PROMOTEDFILE_PLAYING            = 37,
+    NSMIXER_PROMOTEDFILE_PAUSED             = 38,
+    NSMIXER_PROMOTEDFILE_STOPPED            = 39,
+    NSMIXER_PROMOTEDFILE_VOLUME             = 40,
+    NSMIXER_PROMOTEDFILE_POSITION           = 41,
+    NSMIXER_PROMOTEDFILE_DELETE             = 42,
+    NSMIXER_PROMOTEDFILE_RELEASE            = 43,
 };
 
 typedef NSUInteger CDVNocSonicMixerStates;
@@ -117,7 +132,8 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)setInputAmplitude:(CDVInvokedUrlCommand*)command;
 - (void)getVocalInputMeter:(CDVInvokedUrlCommand*)command;
 
-// Two Track Mixing Session
+// 2 Track Mixing Session
+- (void)start2TrackMixingSession:(CDVInvokedUrlCommand*)command;
 - (void)playTwoTracks:(CDVInvokedUrlCommand*)command;
 - (void)pauseTwoTracks:(CDVInvokedUrlCommand*)command;
 - (void)stopTwoTracks:(CDVInvokedUrlCommand*)command;
@@ -127,19 +143,25 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)setNocTrackVolume:(CDVInvokedUrlCommand*)command;
 - (void)getNocTrackMeter:(CDVInvokedUrlCommand*)command;
 - (void)deleteSonicTrackBuffer:(CDVInvokedUrlCommand*)command;
+- (void)releaseSonicTrackBuffer:(CDVInvokedUrlCommand*)command;
 - (void)deleteNocTrackBuffer:(CDVInvokedUrlCommand*)command;
+- (void)releaseNocTrackBuffer:(CDVInvokedUrlCommand*)command;
+- (void)removeNocSonicMidiEdits:(CDVInvokedUrlCommand*)command;
+- (void)mergeNocSonicMidiEdits:(CDVInvokedUrlCommand*)command;
 
 // Master Creation Session
-- (void)createMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)startMasterMixSession:(CDVInvokedUrlCommand*)command;
 - (void)playMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)stopMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command;
 - (void)getCurrentMasterMixPosition:(CDVInvokedUrlCommand*)command;
 - (void)deleteMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)releaseMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)promoteMasterMix:(CDVInvokedUrlCommand*)command;
 
 //  Master Promotion Session
-- (void)promoteMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)startPromotedFile:Session:(CDVInvokedUrlCommand*)command;
 - (void)playPromotedFile:(CDVInvokedUrlCommand*)command;
 - (void)pausePromotedFile:(CDVInvokedUrlCommand*)command;
 - (void)stopPromotedFile:(CDVInvokedUrlCommand*)command;

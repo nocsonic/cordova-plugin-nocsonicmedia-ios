@@ -88,30 +88,43 @@ NocSonicMixer.NSMIXER_SONICLOOP_STOPPED               = 4;
 NocSonicMixer.NSMIXER_SONICLOOP_REWIND                = 5;
 NocSonicMixer.NSMIXER_SONICLOOP_VOLUME                = 6;
 NocSonicMixer.NSMIXER_SONICLOOP_RELEASE               = 7;
+
 NocSonicMixer.NSMIXER_RECORDSESSION_READY             = 8;
 NocSonicMixer.NSMIXER_RECORDSESSION_STARTED           = 9;
 NocSonicMixer.NSMIXER_RECORDSESSION_IN_PROGESS        = 10;
 NocSonicMixer.NSMIXER_RECORDSESSION_STOPPED           = 11;
 NocSonicMixer.NSMIXER_RECORDSESSION_INPUTVOLUME       = 12;
+
 NocSonicMixer.NSMIXER_MIXINGSESSION_READY             = 13;
 NocSonicMixer.NSMIXER_MIXINGSESSION_PLAYING           = 14;
 NocSonicMixer.NSMIXER_MIXINGSESSION_PAUSED            = 15;
-NocSonicMixer.NSMIXER_MIXINGSESSION_EDIT_IN_PROGRESS  = 16;
+NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED           = 16;
 NocSonicMixer.NSMIXER_MIXINGSESSION_REWIND            = 17;
-NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED           = 18;
-NocSonicMixer.NSMIXER_MIXINGSESSION_SONICVOLUME       = 19;
-NocSonicMixer.NSMIXER_MIXINGSESSION_NOCVOLUME         = 20;
+NocSonicMixer.NSMIXER_MIXINGSESSION_NOCVOLUME         = 19;
 NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYSONIC      = 21;
-NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 22;
-NocSonicMixer.NSMIXER_MASTERMIX_MERGING               = 23;
-NocSonicMixer.NSMIXER_MASTERMIX_MERGED                = 24;
-NocSonicMixer.NSMIXER_MASTERMIX_PLAYING               = 25;
-NocSonicMixer.NSMIXER_MASTERMIX_PAUSED                = 26;
-NocSonicMixer.NSMIXER_MASTERMIX_STOPPED               = 27;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_CREATED            = 28;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING            = 29;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED             = 30;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED            = 31;
+NocSonicMixer.NSMIXER_MIXINGSESSION_RELEASESONIC      = 22;
+NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 23;
+NocSonicMixer.NSMIXER_MIXINGSESSION_REMOVEDITS        = 25;
+NocSonicMixer.NSMIXER_MIXINGSESSION_MERGE             = 26;
+
+NocSonicMixer.NSMIXER_MASTERMIX_READY                = 27
+NocSonicMixer.NSMIXER_MASTERMIX_PLAYING               = 28;
+NocSonicMixer.NSMIXER_MASTERMIX_PAUSED                = 29;
+NocSonicMixer.NSMIXER_MASTERMIX_STOPPED               = 30;
+NocSonicMixer.NSMIXER_MASTERMIX_DELETE                = 31;
+NocSonicMixer.NSMIXER_MASTERMIX_VOLUME                = 32;
+NocSonicMixer.NSMIXER_MASTERMIX_POSITION              = 33;
+NocSonicMixer.NSMIXER_MASTERMIX_RELEASE               = 34;
+NocSonicMixer.NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 35;
+
+NocSonicMixer.NSMIXER_PROMOTEDFILE_READY              = 36;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING            = 37;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED             = 38;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED            = 39;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_VOLUME             = 40;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION           = 41;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_DELETE             = 42;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_RELEASE            = 43;
 
 
 NocSonicMixer.MEDIA_MSG = ["None",
@@ -130,22 +143,33 @@ NocSonicMixer.MEDIA_MSG = ["None",
                            "MixingSessionReady",
                            "MixingSessionPlaying",
                            "MixingSessionPaused",
-                           "MixingSessionEditInProgress",
-                           "MixingSessionRewind",
                            "MixingSessionStopped",
+                           "MixingSessionRewind",
                            "MixingSessionSonicVolumeChange",
                            "MixingSessionNocVolumeChange",
                            "MixingSessionDestroySonic",
+                           "MixingSessionReleaseSonic",
                            "MixingSessionDestroyNoc",
-                           "MasterMixMerging",
-                           "MasterMixMerged",
+                           "MixingSessionReleaseNoc",
+                           "MixingSessionRemoveEdits",
+                           "MixingSessionMerge",
+                           "MasterMixRead",
                            "MasterMixPlaying",
                            "MasterMixPaused",
                            "MasterMixStopped",
-                           "PromotedFileCreated",
+                           "MasterMixVolume",
+                           "MasterMixPosition",
+                           "MasterMixDelete",
+                           "MasterMixRelease",
+                           "MasterMixPromoteToFile",
+                           "PromotedFileReady",
                            "PromotedFilePlaying",
                            "PromotedFilePaused",
-                           "PromotedFileStopped"
+                           "PromotedFileStopped",
+                           "PromotedFileVolume",
+                           "PromotedFilePosition",
+                           "PromotedFileDelete",
+                           "PromotedFileRelease"
                            ];
 
 
@@ -483,6 +507,21 @@ NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
  * */
 
 
+
+
+/*
+*     NOTES:Clone buffer(s) created during recording session.
+*
+*
+*
+*/
+
+
+NocSonicMixer.prototype.start2TrackMixingSession = function(){
+   exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "start2TrackMixingSession", [this.id]);
+};
+
+
 /**
  *     NOTES: Simultaneously play audio back from Audio Beat Buffer and And Audio Vocal Buffer
  *
@@ -520,7 +559,6 @@ NocSonicMixer.prototype.pauseTwoTracks = function() {
  */
 
 NocSonicMixer.prototype.stopTwoTracks = function() {
-
  exec(this.successCallback, this.errorCallback, "NocSonicMixer",  "stopTwoTracks", [this.id]);
 };
 
