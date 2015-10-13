@@ -261,7 +261,7 @@
 {
 }
 
-- (void)setNocTrackVolume:(CDVInvokedUrlCommand*)command
+- (void)setNocBufferTrackVolume:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];

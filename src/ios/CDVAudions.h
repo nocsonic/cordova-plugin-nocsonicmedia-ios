@@ -140,7 +140,7 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)rewindTwoTracks:(CDVInvokedUrlCommand*)command;
 - (void)setSonicBufferTrackVolume:(CDVInvokedUrlCommand*)command;
 - (void)getSonicTrackMeter:(CDVInvokedUrlCommand*)command;
-- (void)setNocTrackVolume:(CDVInvokedUrlCommand*)command;
+- (void)setNocBufferTrackVolume:(CDVInvokedUrlCommand*)command;
 - (void)getNocTrackMeter:(CDVInvokedUrlCommand*)command;
 - (void)deleteSonicTrackBuffer:(CDVInvokedUrlCommand*)command;
 - (void)releaseSonicTrackBuffer:(CDVInvokedUrlCommand*)command;
