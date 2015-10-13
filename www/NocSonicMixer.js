@@ -622,9 +622,9 @@ NocSonicMixer.prototype.getSonicTrackMeter = function(success, fail) {
   *         call playTwoTracks() the volume change  should be evident.
  */
 
-NocSonicMixer.prototype.setNocTrackVolume = function(nocBufferGain) {
+NocSonicMixer.prototype.setNocBufferTrackVolume = function(nocBufferGain) {
 
-  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setNocTrackVolume", [this.id, nocBufferGain]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setNocBufferTrackVolume", [this.id, nocBufferGain]);
 };
 
 
