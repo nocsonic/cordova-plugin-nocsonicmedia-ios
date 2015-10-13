@@ -480,6 +480,14 @@
     [self.commandDelegate evalJs:jsString];
 }
 
+- (void)promotedFileSeekTo:(CDVInvokedUrlCommand*)command
+{
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_SEEK_POSITION];
+    [self.commandDelegate evalJs:jsString];
+}
 
 - (void)setPromotedFileVolume:(CDVInvokedUrlCommand*)command
 {
@@ -503,12 +511,21 @@
     [self.commandDelegate evalJs:jsString];
 }
 
-- (void)deleteMasterFile:(CDVInvokedUrlCommand*)command
+- (void)deletePromotedFile:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
     jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_DELETE];
+    [self.commandDelegate evalJs:jsString];
+}
+
+- (void)getPromotedFileLocation:(CDVInvokedUrlCommand*)command
+{
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_LOCATION];
     [self.commandDelegate evalJs:jsString];
 }
 

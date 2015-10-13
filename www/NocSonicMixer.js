@@ -169,7 +169,8 @@ NocSonicMixer.MEDIA_MSG = ["None",
                            "PromotedFileVolume",
                            "PromotedFilePosition",
                            "PromotedFileDelete",
-                           "PromotedFileRelease"
+                           "PromotedFileRelease",
+                           "PromotedFileLocation"
                            ];
 
 
@@ -516,7 +517,6 @@ NocSonicMixer.prototype.getVocalInputMeter = function(success, fail) {
 *
 */
 
-
 NocSonicMixer.prototype.start2TrackMixingSession = function(){
    exec(this.successCallback, this.errorCallback,  "NocSonicMixer", "start2TrackMixingSession", [this.id]);
 };
@@ -673,6 +673,34 @@ NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
 
 
 
+/**
+ *       NOTES:  remove current Noc and Sonic Midi Edtis...
+ *               return to original buffer.
+ *
+ *
+ */
+NocSonicMixer.prototype.removeNocSonicMidiEdits = function() {
+
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer","removeNocSonicMidiEdits", [this.id]);
+};
+
+
+
+
+/**
+ *       NOTES:  merge noc and soinic buffers and any midi edits into a single buffer
+ *
+ */
+NocSonicMixer.prototype.mergeNocSonicMidiEdits = function() {
+
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer","mergeNocSonicMidiEdits", [this.id]);
+};
+
+
+
+
+
+
 
 
 /**
@@ -690,9 +718,9 @@ NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
  *       createMasterMix();
  *
  */
-NocSonicMixer.prototype.createMasterMix = function() {
+NocSonicMixer.prototype.startMasterMixSession = function() {
 
-  //exec(null, null, "NocSonicMixer", "createMasterMix", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "startMasterMixSession", [this.id]);
 };
 
 
@@ -700,16 +728,24 @@ NocSonicMixer.prototype.createMasterMix = function() {
  *       NOTES: Playing back (reading samples from master mix buffer)
  *
  *
- *       -- set master mix back to 0
- *       -- playing master mix from beginning
+ *       -- play master mix from current position
  *
  *
  */
 NocSonicMixer.prototype.playMasterMix = function() {
 
-  //exec(null, null, "NocSonicMixer", "playMasterMix", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "playMasterMix", [this.id]);
 };
 
+/**
+ *       NOTES: Pause playback back of maser mix
+ *
+ *
+ */
+NocSonicMixer.prototype.pauseMasterMix = function() {
+
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "pauseMasterMix", [this.id]);
+};
 
 /**
  *       NOTES: Merge audio from two Buffers, into one buffer, DO not destroy  BEAT Buffer or VOCAL Buffer\
@@ -719,7 +755,7 @@ NocSonicMixer.prototype.playMasterMix = function() {
  */
 NocSonicMixer.prototype.stopMasterMix = function() {
 
-  //exec(null, null, "NocSonicMixer", "stopMasterMix", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "stopMasterMix", [this.id]);
 };
 
 
@@ -735,7 +771,7 @@ NocSonicMixer.prototype.stopMasterMix = function() {
 
 NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
 
-  //exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
+  exec(this.successCallback, this.errorCallback,"NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
 };
 
 /**
@@ -756,21 +792,6 @@ NocSonicMixer.prototype.getMasterMixMeter = function(success, fail) {
             fail, "NocSonicMixer", "getMasterMixMeter", [this.id]);*/
 };
 
-
-
- /**
- *       NOTES: the Gain (Volume) level should begin at .75
- *       --changes to volume do not effect final promoted mix, should simply simulate
-  *        what playback will sound like from file creation
- *
- *      @param masterMixGain: Number; (0-1)  0 being mute, 1 being the loudest
- *
- */
-
-NocSonicMixer.prototype.setMasterMixVolume = function(masterMixGain) {
-
-  //exec(null, null, "NocSonicMixer", "setMasterMixVolume", [this.id, masterMixGain]);
-};
 
 
 /**
@@ -798,6 +819,17 @@ NocSonicMixer.prototype.getCurrentMasterMixDuration= function() {
 
 
 /**
+ *       NOTES:  release master mix playback
+ *
+ */
+
+
+NocSonicMixer.prototype.releaseMasterMix = function() {
+
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "releaseMasterMix", [this.id]);
+};
+
+/**
  *       NOTES:  deleteMasterMix()  will be called when user when user has accepted final promotedMasterMix()
  *                -- User will have options to listen to final .m4a file before deleteMasterMix() is called
  *                -- All memory allocated for buffer should be deleted and resources released
@@ -807,16 +839,9 @@ NocSonicMixer.prototype.getCurrentMasterMixDuration= function() {
 
 NocSonicMixer.prototype.deleteMasterMix = function() {
 
-  //exec(null, null, "NocSonicMixer", "deleteMasterMix", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "deleteMasterMix", [this.id]);
 };
 
-
-
-/**
- *     Master Promotion Session
- *
- *
- * */
 
 
 /**
@@ -826,9 +851,25 @@ NocSonicMixer.prototype.deleteMasterMix = function() {
  */
 
 
-NocSonicMixer.prototype.promoteMasterToFile = function(fileName) {
+NocSonicMixer.prototype.promoteMasterMix = function(fileName) {
 
-  //exec(null, null, "NocSonicMixer", "promoteMasterMix", [this.id], fileName);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "promoteMasterMix", [this.id], fileName);
+};
+
+
+
+
+
+
+
+/**
+ *     Master Promotion Session
+ *
+ *
+ * */
+NocSonicMixer.prototype.startPromotedFileSession = function(){
+
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "startPromotedFileSession", [this.id]);
 };
 
 
@@ -842,7 +883,7 @@ NocSonicMixer.prototype.promoteMasterToFile = function(fileName) {
 
 NocSonicMixer.prototype.playPromotedFile = function() {
 
-  //exec(null, null, "NocSonicMixer", "playPromotedFile", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "playPromotedFile", [this.id]);
 };
 
 
@@ -853,7 +894,7 @@ NocSonicMixer.prototype.playPromotedFile = function() {
 
 NocSonicMixer.prototype.pausePromotedFile = function() {
 
-  //exec(null, null, "NocSonicMixer", "pausePromotedFile", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "pausePromotedFile", [this.id]);
 };
 
 
@@ -864,7 +905,7 @@ NocSonicMixer.prototype.pausePromotedFile = function() {
 
 NocSonicMixer.prototype.stopPromotedFile = function() {
 
-  //exec(null, null, "NocSonicMixer", "stopPromotedFile", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "stopPromotedFile", [this.id]);
 };
 
 
@@ -905,6 +946,8 @@ NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
   /*exec(function(p) {
         me._promotedFilePosition = p;
     }, this.errorCallback,"NocSonicMixer", "promotedFileSeekTo", [this.id,milliseconds]);*/
+
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "promotedFileSeekTo", [this.id, milliseconds]);
 };
 
 
@@ -917,7 +960,7 @@ NocSonicMixer.prototype.promotedFileSeekTo = function(milliseconds) {
 
 NocSonicMixer.prototype.setPromotedFileVolume = function(promotedFileGain) {
 
-  //exec(null, null, "NocSonicMixer", "", setPromotedFileVolume[this.id, promotedFileGain]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "setPromotedFileVolume", [this.id, promotedFileGain]);
 };
 
 
@@ -946,7 +989,7 @@ NocSonicMixer.prototype.getPromotedFileMeter = function(success, fail) {
  */
 
 NocSonicMixer.prototype.getPromotedFileLocation = function() {
-        return this._promotedFileLocation;
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "getPromotedFileLocation", [this.id])
 };
 
 
@@ -955,7 +998,7 @@ NocSonicMixer.prototype.getPromotedFileLocation = function() {
  * Release the resources.
  */
 NocSonicMixer.prototype.releasePromotedFile = function() {
-  //exec(null, this.errorCallback, "NocSonicMixer", "releasePromotedFile", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "releasePromotedFile", [this.id]);
 };
 
 
@@ -968,7 +1011,7 @@ NocSonicMixer.prototype.releasePromotedFile = function() {
 
 NocSonicMixer.prototype.deletePromotedFile = function() {
 
-  //exec(null, null, "NocSonicMixer", "deleteMasterFile", [this.id]);
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "deletePromotedFile", [this.id]);
 };
 
 

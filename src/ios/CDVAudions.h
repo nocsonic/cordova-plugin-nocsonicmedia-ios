@@ -61,6 +61,7 @@ enum CDVNocSonicMixerStates {
     NSMIXER_PROMOTEDFILE_SEEK_POSITION      = 41,
     NSMIXER_PROMOTEDFILE_DELETE             = 42,
     NSMIXER_PROMOTEDFILE_RELEASE            = 43,
+    NSMIXER_PROMOTEDFILE_LOCATION           = 44,
 };
 
 typedef NSUInteger CDVNocSonicMixerStates;
@@ -171,7 +172,8 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)setPromotedFileVolume:(CDVInvokedUrlCommand*)command;
 - (void)getPromotedFileMeter:(CDVInvokedUrlCommand*)command;
 - (void)releasePromotedFile:(CDVInvokedUrlCommand*)command;
-- (void)deleteMasterFile:(CDVInvokedUrlCommand*)command;
+- (void)deletePromotedFile:(CDVInvokedUrlCommand*)command;
+- (void)getPromotedFileLocation:(CDVInvokedUrlCommand*)command;
 
 
 // Two Track Mixing Session
