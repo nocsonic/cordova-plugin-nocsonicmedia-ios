@@ -49,7 +49,7 @@ enum CDVNocSonicMixerStates {
     NSMIXER_MASTERMIX_STOPPED               = 30,
     NSMIXER_MASTERMIX_DELETE                = 31,
     NSMIXER_MASTERMIX_VOLUME                = 32,
-    NSMIXER_MASTERMIX_POSITION              = 33,
+    NSMIXER_MASTERMIX_SEEK_POSITION         = 33,
     NSMIXER_MASTERMIX_RELEASE               = 34,
     NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 35,
 
