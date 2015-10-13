@@ -392,7 +392,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_SEEK_POSITION];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_POSITION];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -476,7 +476,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_SEEK_POSITION];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_POSITION];
     [self.commandDelegate evalJs:jsString];
 }
 

@@ -107,7 +107,7 @@ NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 23;
 NocSonicMixer.NSMIXER_MIXINGSESSION_REMOVEDITS        = 25;
 NocSonicMixer.NSMIXER_MIXINGSESSION_MERGE             = 26;
 
-NocSonicMixer.NSMIXER_MASTERMIX_READY                = 27
+NocSonicMixer.NSMIXER_MASTERMIX_READY                 = 27;
 NocSonicMixer.NSMIXER_MASTERMIX_PLAYING               = 28;
 NocSonicMixer.NSMIXER_MASTERMIX_PAUSED                = 29;
 NocSonicMixer.NSMIXER_MASTERMIX_STOPPED               = 30;
