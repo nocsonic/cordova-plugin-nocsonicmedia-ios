@@ -282,12 +282,14 @@
     jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_DESTROYSONIC];
     [self.commandDelegate evalJs:jsString];
 }
+
+
 - (void)releaseSonicTrackBuffer:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_DESTROYSONIC];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_RELEASESONIC];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -305,7 +307,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_DESTROYSONIC];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_RELEASENOC];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -315,7 +317,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_DESTROYSONIC];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_REMOVEDITS];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -324,7 +326,7 @@
     NSString* callbackId = command.callbackId;
     NSString* mediaId    = [command argumentAtIndex:0];
     NSString* jsString   = nil;
-    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_DESTROYSONIC];
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_MERGE];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -338,18 +340,47 @@
 
 - (void)startMasterMixSession:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_READY];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)playMasterMix:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MIXINGSESSION_PLAYING];
+    [self.commandDelegate evalJs:jsString];
+}
+
+- (void)pauseMasterMix:(CDVInvokedUrlCommand*)command
+{
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_PAUSED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)stopMasterMix:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_STOPPED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_VOLUME];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command
@@ -358,22 +389,42 @@
 
 - (void)getCurrentMasterMixPosition:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_POSITION];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)deleteMasterMix:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_DELETE];
+    [self.commandDelegate evalJs:jsString];
 }
 
 
 
 - (void)releaseMasterMix:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_RELEASE];
+    [self.commandDelegate evalJs:jsString];
 }
 
 
 
 - (void)promoteMasterMix:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_PROMOTE_TO_FILE];
+    [self.commandDelegate evalJs:jsString];
 }
 
 
@@ -384,32 +435,59 @@
 //
 // ---------------------------------------------------------------------
 
-- (void)startPromotedFile:(CDVInvokedUrlCommand*)command
+- (void)startPromotedFileSession:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_READY];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)playPromotedFile:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_PLAYING];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)pausePromotedFile:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_PAUSED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)stopPromotedFile:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_STOPPED];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)getPromotedFilePosition:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_POSITION];
+    [self.commandDelegate evalJs:jsString];
 }
 
-- (void)promotedFileSeekTo:(CDVInvokedUrlCommand*)command
-{
-}
 
 - (void)setPromotedFileVolume:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_VOLUME];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)getPromotedFileMeter:(CDVInvokedUrlCommand*)command
@@ -418,10 +496,20 @@
 
 - (void)releasePromotedFile:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_RELEASE];
+    [self.commandDelegate evalJs:jsString];
 }
 
 - (void)deleteMasterFile:(CDVInvokedUrlCommand*)command
 {
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_PROMOTEDFILE_DELETE];
+    [self.commandDelegate evalJs:jsString];
 }
 
 

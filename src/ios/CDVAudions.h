@@ -43,7 +43,7 @@ enum CDVNocSonicMixerStates {
     NSMIXER_MIXINGSESSION_REMOVEDITS        = 25,
     NSMIXER_MIXINGSESSION_MERGE             = 26,
 
-    NSMIXER_MASTERMIX_READY                = 27
+    NSMIXER_MASTERMIX_READY                 = 27,
     NSMIXER_MASTERMIX_PLAYING               = 28,
     NSMIXER_MASTERMIX_PAUSED                = 29,
     NSMIXER_MASTERMIX_STOPPED               = 30,
@@ -152,6 +152,7 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 // Master Creation Session
 - (void)startMasterMixSession:(CDVInvokedUrlCommand*)command;
 - (void)playMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)pauseMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)stopMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command;
@@ -161,7 +162,7 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)promoteMasterMix:(CDVInvokedUrlCommand*)command;
 
 //  Master Promotion Session
-- (void)startPromotedFile:Session:(CDVInvokedUrlCommand*)command;
+- (void)startPromotedFileSession:(CDVInvokedUrlCommand*)command;
 - (void)playPromotedFile:(CDVInvokedUrlCommand*)command;
 - (void)pausePromotedFile:(CDVInvokedUrlCommand*)command;
 - (void)stopPromotedFile:(CDVInvokedUrlCommand*)command;
