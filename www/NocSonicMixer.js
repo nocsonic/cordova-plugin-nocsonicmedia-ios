@@ -101,6 +101,7 @@ NocSonicMixer.NSMIXER_MIXINGSESSION_PAUSED            = 15;
 NocSonicMixer.NSMIXER_MIXINGSESSION_STOPPED           = 16;
 NocSonicMixer.NSMIXER_MIXINGSESSION_REWIND            = 17;
 NocSonicMixer.NSMIXER_MIXINGSESSION_NOCVOLUME         = 19;
+NocSonicMixer.NSMIXER_MIXINGSESSION_SONICVOLUME       = 20;
 NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYSONIC      = 21;
 NocSonicMixer.NSMIXER_MIXINGSESSION_RELEASESONIC      = 22;
 NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 23;
@@ -145,8 +146,8 @@ NocSonicMixer.MEDIA_MSG = ["None",
                            "MixingSessionPaused",
                            "MixingSessionStopped",
                            "MixingSessionRewind",
-                           "MixingSessionSonicVolumeChange",
                            "MixingSessionNocVolumeChange",
+                           "MixingSessionSonicVolumeChange",
                            "MixingSessionDestroySonic",
                            "MixingSessionReleaseSonic",
                            "MixingSessionDestroyNoc",
