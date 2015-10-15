@@ -661,6 +661,17 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
    exec(this.successCallback, this.errorCallback, "NocSonicMixer", "deleteSonicTrackBuffer", [this.id]);
 };
 
+/**
+ *       NOTES:  deleteSonicTrackBuffer()  will be called when user has decided masterMix is acceptable
+ *                -- All memory allocated for buffer should be deleted and resources released
+ *
+ *
+ */
+NocSonicMixer.prototype.releaseSonicTrackBuffer = function() {
+
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "releaseSonicTrackBuffer", [this.id]);
+};
+
 
 
 /**
@@ -669,7 +680,20 @@ NocSonicMixer.prototype.deleteSonicTrackBuffer = function() {
  *
  *
  */
-NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
+NocSonicMixer.prototype.releaseNocTrackBuffer = function() {
+
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer","deleteNocTrackBuffer", [this.id]);
+};
+
+
+
+/**
+ *       NOTES:  deleteVocalTrackBuffer()  will be called when user has decided masterMix is acceptable
+ *                -- All memory allocated for buffer should be deleted and resources released
+ *
+ *
+ */
+NocSonicMixer.prototype.releaseNocTrackBuffer = function() {
 
    exec(this.successCallback, this.errorCallback, "NocSonicMixer","deleteNocTrackBuffer", [this.id]);
 };
