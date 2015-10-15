@@ -695,7 +695,7 @@ NocSonicMixer.prototype.deleteNocTrackBuffer = function() {
  */
 NocSonicMixer.prototype.releaseNocTrackBuffer = function() {
 
-   exec(this.successCallback, this.errorCallback, "NocSonicMixer","deleteNocTrackBuffer", [this.id]);
+   exec(this.successCallback, this.errorCallback, "NocSonicMixer","releaseNocTrackBuffer", [this.id]);
 };
 
 
