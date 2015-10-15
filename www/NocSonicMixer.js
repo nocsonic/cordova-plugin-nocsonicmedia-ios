@@ -105,6 +105,7 @@ NocSonicMixer.NSMIXER_MIXINGSESSION_SONICVOLUME       = 20;
 NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYSONIC      = 21;
 NocSonicMixer.NSMIXER_MIXINGSESSION_RELEASESONIC      = 22;
 NocSonicMixer.NSMIXER_MIXINGSESSION_DESTROYNOC        = 23;
+NocSonicMixer.NSMIXER_MIXINGSESSION_RELEASENOC        = 24;
 NocSonicMixer.NSMIXER_MIXINGSESSION_REMOVEDITS        = 25;
 NocSonicMixer.NSMIXER_MIXINGSESSION_MERGE             = 26;
 
@@ -126,6 +127,7 @@ NocSonicMixer.NSMIXER_PROMOTEDFILE_VOLUME             = 40;
 NocSonicMixer.NSMIXER_PROMOTEDFILE_POSITION           = 41;
 NocSonicMixer.NSMIXER_PROMOTEDFILE_DELETE             = 42;
 NocSonicMixer.NSMIXER_PROMOTEDFILE_RELEASE            = 43;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_FILELOCATION       = 44;
 
 
 NocSonicMixer.MEDIA_MSG = ["None",
@@ -154,13 +156,13 @@ NocSonicMixer.MEDIA_MSG = ["None",
                            "MixingSessionReleaseNoc",
                            "MixingSessionRemoveEdits",
                            "MixingSessionMerge",
-                           "MasterMixRead",
+                           "MasterMixReady",
                            "MasterMixPlaying",
                            "MasterMixPaused",
                            "MasterMixStopped",
+                           "MasterMixDelete",
                            "MasterMixVolume",
                            "MasterMixPosition",
-                           "MasterMixDelete",
                            "MasterMixRelease",
                            "MasterMixPromoteToFile",
                            "PromotedFileReady",
