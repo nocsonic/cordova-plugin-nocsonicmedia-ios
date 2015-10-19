@@ -115,19 +115,20 @@ NocSonicMixer.NSMIXER_MASTERMIX_PAUSED                = 28;
 NocSonicMixer.NSMIXER_MASTERMIX_STOPPED               = 29;
 NocSonicMixer.NSMIXER_MASTERMIX_DELETE                = 30;
 NocSonicMixer.NSMIXER_MASTERMIX_VOLUME                = 31;
-NocSonicMixer.NSMIXER_MASTERMIX_SEEK_POSITION         = 32;
-NocSonicMixer.NSMIXER_MASTERMIX_RELEASE               = 33;
-NocSonicMixer.NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 34;
+NocSonicMixer.NSMIXER_MASTERMIX_REWIND                = 32;
+NocSonicMixer.NSMIXER_MASTERMIX_SEEK_POSITION         = 33;
+NocSonicMixer.NSMIXER_MASTERMIX_RELEASE               = 34;
+NocSonicMixer.NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 35;
 
-NocSonicMixer.NSMIXER_PROMOTEDFILE_READY              = 35;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING            = 36;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED             = 37;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED            = 38;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_VOLUME             = 39;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_SEEK_POSITION      = 40;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_DELETE             = 41;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_RELEASE            = 42;
-NocSonicMixer.NSMIXER_PROMOTEDFILE_LOCATION           = 43;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_READY              = 36;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PLAYING            = 37;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_PAUSED             = 38;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_STOPPED            = 39;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_VOLUME             = 40;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_SEEK_POSITION      = 41;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_DELETE             = 42;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_RELEASE            = 43;
+NocSonicMixer.NSMIXER_PROMOTEDFILE_LOCATION           = 44;
 
 
 NocSonicMixer.MEDIA_MSG = ["None",
@@ -162,6 +163,7 @@ NocSonicMixer.MEDIA_MSG = ["None",
                            "MasterMixStopped",
                            "MasterMixDelete",
                            "MasterMixVolume",
+                           "MasterMixRewind",
                            "MasterMixPosition",
                            "MasterMixRelease",
                            "MasterMixPromoteToFile",
@@ -785,6 +787,17 @@ NocSonicMixer.prototype.stopMasterMix = function() {
   exec(this.successCallback, this.errorCallback, "NocSonicMixer", "stopMasterMix", [this.id]);
 };
 
+
+/**
+ *       NOTES: rewind the Meged Mix to the begin \
+ *
+ *       rewindMasterMix();
+ *
+ */
+NocSonicMixer.prototype.rewindMasterMix = function() {
+
+  exec(this.successCallback, this.errorCallback, "NocSonicMixer", "rewindMasterMix", [this.id]);
+};
 
 
  /**

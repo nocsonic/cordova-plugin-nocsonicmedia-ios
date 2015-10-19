@@ -383,6 +383,15 @@
     [self.commandDelegate evalJs:jsString];
 }
 
+- (void)rewindMasterMix:(CDVInvokedUrlCommand*)command
+{
+    NSString* callbackId = command.callbackId;
+    NSString* mediaId    = [command argumentAtIndex:0];
+    NSString* jsString   = nil;
+    jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%d);", @"cordova.require('cordova-plugin-nocsonicmedia-ios.NocSonicMixer').onStatus", mediaId, NSMIXER_STATE, NSMIXER_MASTERMIX_REWIND];
+    [self.commandDelegate evalJs:jsString];
+}
+
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command
 {
 }

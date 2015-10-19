@@ -49,19 +49,20 @@ enum CDVNocSonicMixerStates {
     NSMIXER_MASTERMIX_STOPPED               = 29,
     NSMIXER_MASTERMIX_DELETE                = 30,
     NSMIXER_MASTERMIX_VOLUME                = 31,
-    NSMIXER_MASTERMIX_SEEK_POSITION         = 32,
-    NSMIXER_MASTERMIX_RELEASE               = 33,
-    NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 34,
+    NSMIXER_MASTERMIX_REWIND                = 32,
+    NSMIXER_MASTERMIX_SEEK_POSITION         = 33,
+    NSMIXER_MASTERMIX_RELEASE               = 34,
+    NSMIXER_MASTERMIX_PROMOTE_TO_FILE       = 35,
 
-    NSMIXER_PROMOTEDFILE_READY              = 35,
-    NSMIXER_PROMOTEDFILE_PLAYING            = 36,
-    NSMIXER_PROMOTEDFILE_PAUSED             = 37,
-    NSMIXER_PROMOTEDFILE_STOPPED            = 38,
-    NSMIXER_PROMOTEDFILE_VOLUME             = 39,
-    NSMIXER_PROMOTEDFILE_SEEK_POSITION      = 40,
-    NSMIXER_PROMOTEDFILE_DELETE             = 41,
-    NSMIXER_PROMOTEDFILE_RELEASE            = 42,
-    NSMIXER_PROMOTEDFILE_LOCATION           = 43,
+    NSMIXER_PROMOTEDFILE_READY              = 36,
+    NSMIXER_PROMOTEDFILE_PLAYING            = 37,
+    NSMIXER_PROMOTEDFILE_PAUSED             = 38,
+    NSMIXER_PROMOTEDFILE_STOPPED            = 39,
+    NSMIXER_PROMOTEDFILE_VOLUME             = 40,
+    NSMIXER_PROMOTEDFILE_SEEK_POSITION      = 41,
+    NSMIXER_PROMOTEDFILE_DELETE             = 42,
+    NSMIXER_PROMOTEDFILE_RELEASE            = 43,
+    NSMIXER_PROMOTEDFILE_LOCATION           = 44
 };
 
 typedef NSUInteger CDVNocSonicMixerStates;
@@ -155,6 +156,7 @@ typedef NSUInteger CDVNocSonicMixeMsg;
 - (void)playMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)pauseMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)stopMasterMix:(CDVInvokedUrlCommand*)command;
+- (void)rewindMasterMix:(CDVInvokedUrlCommand*)command;
 - (void)setMasterMixVolume:(CDVInvokedUrlCommand*)command;
 - (void)getMasterMixMeter:(CDVInvokedUrlCommand*)command;
 - (void)getCurrentMasterMixPosition:(CDVInvokedUrlCommand*)command;
